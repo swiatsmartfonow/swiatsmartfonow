@@ -1,0 +1,1 @@
+wygenerowany z google 

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zgłoś naprawę – Świat Smartfonów</title>
+  <meta name="description" content="Zgłoszenie naprawy telefonu w serwisie Świat Smartfonów." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-b from-slate-50 to-white text-slate-800" style="font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif">
+  <!-- Header -->
+  <header class="sticky top-0 z-50 backdrop-blur bg-white/80 border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 text-slate-900 font-extrabold text-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" viewBox="0 0 24 24" fill="currentColor"><path d="M7 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8.828a2 2 0 0 0-.586-1.414l-4.828-4.828A2 2 0 0 0 12.172 2H7zm5 2 5 5h-3a2 2 0 0 1-2-2V4z"/></svg>
+        Świat Smartfonów
+      </a>
+      <nav class="hidden md:flex items-center gap-4 text-sm">
+        <a class="hover:text-blue-600" href="/pages/index.html">Strona główna</a>
+        <a class="hover:text-blue-600" href="/pages/uslugi.html">Usługi</a>
+        <a class="hover:text-blue-600" href="/pages/opinie.html">Opinie</a>
+        <a class="hover:text-blue-600" href="/pages/kontakt.html">Kontakt</a>
+        <a class="hover:text-blue-600" href="/pages/3d.html">Widok 3D</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="max-w-3xl mx-auto px-4 py-10">
+    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 mb-2">Zgłoś naprawę</h1>
+    <p class="text-slate-600 mb-8">Wypełnij krótki formularz, a nasz serwisant skontaktuje się z Tobą w celu potwierdzenia szczegółów.</p>
+
+    <form class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-5" action="#" method="post">
+      <div>
+        <label class="block text-sm font-semibold text-slate-700 mb-1" for="imie">Imię i nazwisko</label>
+        <input class="w-full rounded-lg border-slate-300 focus:border-blue-500 focus:ring-blue-500" type="text" id="imie" name="imie" required>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-1" for="telefon">Telefon</label>
+          <input class="w-full rounded-lg border-slate-300 focus:border-blue-500 focus:ring-blue-500" type="tel" id="telefon" name="telefon" required>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-1" for="email">E-mail (opcjonalnie)</label>
+          <input class="w-full rounded-lg border-slate-300 focus:border-blue-500 focus:ring-blue-500" type="email" id="email" name="email">
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-1" for="marka">Marka</label>
+          <input class="w-full rounded-lg border-slate-300 focus:border-blue-500 focus:ring-blue-500" type="text" id="marka" name="marka" placeholder="np. Apple, Samsung" required>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-1" for="model">Model</label>
+          <input class="w-full rounded-lg border-slate-300 focus:border-blue-500 focus:ring-blue-500" type="text" id="model" name="model" placeholder="np. iPhone 12" required>
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-slate-700 mb-1" for="problem">Opis usterki</label>
+        <textarea class="w-full rounded-lg border-slate-300 focus:border-blue-500 focus:ring-blue-500" id="problem" name="problem" rows="5" placeholder="Opisz co się dzieje z urządzeniem" required></textarea>
+      </div>
+      <div class="flex items-center gap-2 text-sm text-slate-600">
+        <input id="regulamin" type="checkbox" required>
+        <label for="regulamin">Akceptuję przetwarzanie danych w celu realizacji zgłoszenia.</label>
+      </div>
+      <button type="submit" class="inline-flex items-center justify-center rounded-lg bg-blue-600 text-white font-semibold px-5 py-3 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+        Wyślij zgłoszenie
+      </button>
+    </form>
+
+    <p class="text-xs text-slate-500 mt-4">Formularz demonstracyjny – w wersji produkcyjnej zostanie podpięty system powiadomień.</p>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 mt-12">
+    <div class="max-w-6xl mx-auto px-4 py-6 text-sm text-slate-600 flex flex-col md:flex-row items-center justify-between gap-3">
+      <p>© <span id="y"></span> Świat Smartfonów</p>
+      <nav class="flex items-center gap-4">
+        <a class="hover:text-blue-600" href="/pages/index.html">Strona główna</a>
+        <a class="hover:text-blue-600" href="/pages/kontakt.html">Kontakt</a>
+        <a class="hover:text-blue-600" href="/pages/opinie.html">Opinie</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

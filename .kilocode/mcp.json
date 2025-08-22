@@ -31,6 +31,10 @@
         "mcp-server-git",
         "--repository",
         "/Users/trading/Documents/_roboczy_2026/swiatsmartfonow.pl/ai-code/google"
+      ],
+      "alwaysAllow": [
+        "git_show",
+        "git_status"
       ]
     }
   }

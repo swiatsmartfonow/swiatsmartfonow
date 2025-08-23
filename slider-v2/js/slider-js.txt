@@ -1,0 +1,112 @@
+# Prompt Systemowy: Generator Slidera Zdjęć z API
+
+## Zadanie
+Napisz skrypt JavaScript, który pobiera dane ze wskazanego URL API i tworzy interaktywny slider zdjęć na stronie internetowej.
+
+## Wymagania funkcjonalne
+
+### 1. Pobieranie danych
+- Skrypt przyjmuje jako parametr URL API (np. `https://picsum.photos/v2/list?page=1&limit=2`)
+- Wykonuje zapytanie HTTP GET do podanego endpointu
+- Obsługuje błędy sieciowe i nieprawidłowe odpowiedzi
+- Parsuje odpowiedź JSON zgodnie z oczekiwanym formatem
+
+### 2. Format danych wejściowych
+Oczekiwany format JSON:
+```json
+[
+  {
+    "id": "0",
+    "author": "Alejandro Escamilla",
+    "width": 5000,
+    "height": 3333,
+    "url": "https://unsplash.com/photos/yC-Yzbqy7PY",
+    "download_url": "https://picsum.photos/id/0/5000/3333"
+  },
+  {
+    "id": "1", 
+    "author": "Alejandro Escamilla",
+    "width": 5000,
+    "height": 3333,
+    "url": "https://unsplash.com/photos/LNRyGwIJr5c",
+    "download_url": "https://picsum.photos/id/1/5000/3333"
+  }
+]
+```
+
+### 3. Funkcjonalności slidera
+- **Wyświetlanie zdjęć**: Użyj pola `download_url` jako źródła obrazu
+- **Nawigacja**: Przyciski "poprzedni" i "następny" do przełączania zdjęć
+- **Auto-play**: Opcjonalne automatyczne przewijanie co 3-5 sekund
+- **Wskaźniki**: Kropki lub numery pokazujące aktualną pozycję w sliderze
+- **Informacje o zdjęciu**: Wyświetlanie autora i wymiarów obrazu
+- **Responsywność**: Slider dostosowuje się do różnych rozmiarów ekranu
+
+### 4. Wymagania techniczne
+- **Vanilla JavaScript** (bez zewnętrznych bibliotek)
+- **Modern ES6+**: Użyj async/await, arrow functions, template literals
+- **CSS Grid/Flexbox**: Do układu i pozycjonowania
+- **CSS Transitions**: Płynne animacje przejść między zdjęciami
+- **Error handling**: Obsługa błędów pobierania danych i ładowania obrazów
+- **Loading states**: Wskaźnik ładowania podczas pobierania danych
+
+### 5. Struktura kodu
+```javascript
+// Główna funkcja inicjalizująca slider
+async function initSlider(apiUrl, containerId) {
+  // implementacja
+}
+
+// Klasa lub obiekt slidera
+class ImageSlider {
+  constructor(images, container) {
+    // implementacja
+  }
+  
+  // Metody slidera
+  nextSlide() { }
+  prevSlide() { }
+  goToSlide(index) { }
+  startAutoplay() { }
+  stopAutoplay() { }
+}
+```
+
+### 6. HTML i CSS
+- Stwórz kompletny, samodzielny plik HTML
+- Użyj semantycznego HTML5
+- CSS powinien zapewniać:
+  - Responsywny design
+  - Płynne animacje
+  - Estetyczny wygląd
+  - Dostępność (focus states, alt texts)
+
+### 7. Dodatkowe funkcje (opcjonalne)
+- **Keyboard navigation**: Strzałki lewo/prawo do nawigacji
+- **Touch support**: Swipe na urządzeniach mobilnych  
+- **Lazy loading**: Ładowanie obrazów na żądanie
+- **Thumbnail preview**: Miniaturki wszystkich zdjęć
+- **Fullscreen mode**: Możliwość powiększenia obrazu
+
+### 8. Obsługa błędów
+- Sprawdzenie poprawności URL
+- Obsługa błędów HTTP (404, 500, itp.)
+- Obsługa pustej lub nieprawidłowej odpowiedzi JSON
+- Fallback dla obrazów, które nie mogą się załadować
+- Komunikaty błędów dla użytkownika
+
+### 9. Przykład użycia
+```javascript
+// Inicjalizacja slidera
+initSlider('https://picsum.photos/v2/list?page=1&limit=10', 'slider-container');
+```
+
+### 10. Wymagania dotyczące kodu
+- **Czytelność**: Dobrze skomentowany, zrozumiały kod
+- **Modularność**: Kod podzielony na logiczne funkcje/klasy
+- **Performance**: Optymalizacja dla wydajności
+- **Cross-browser compatibility**: Działanie w nowoczesnych przeglądarkach
+- **Accessibility**: Wsparcie dla screen readerów i nawigacji klawiaturą
+
+## Oczekiwany rezultat
+Kompletny, działający skrypt JavaScript z HTML i CSS, który tworzy profesjonalny, interaktywny slider zdjęć z dowolnego API zgodnego z podanym formatem danych.

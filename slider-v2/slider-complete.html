@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktywny Slider Zdjęć</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .slider-container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slider-header {
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            text-align: center;
+        }
+
+        .slider-header h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        .api-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .api-input input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            min-width: 200px;
+        }
+
+        .api-input button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .api-input button:hover {
+            background: #0056b3;
+        }
+
+        .slider-wrapper {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .slider-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .slide-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 30px 20px 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .slide:hover .slide-info {
+            transform: translateY(0);
+        }
+
+        .slide-info h3 {
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+
+        .slide-info p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            color: #333;
+            transition: all 0.3s ease;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-button:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: translateY(-50%) scale(1);
+        }
+
+        .nav-prev {
+            left: 20px;
+        }
+
+        .nav-next {
+            right: 20px;
+        }
+
+        .slider-controls {
+            padding: 20px;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .indicators {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #dee2e6;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .indicator.active {
+            background: #007bff;
+            transform: scale(1.2);
+        }
+
+        .autoplay-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .autoplay-btn {
+            padding: 8px 16px;
+            border: 2px solid #007bff;
+            background: transparent;
+            color: #007bff;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .autoplay-btn.active {
+            background: #007bff;
+            color: white;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 500px;
+            font-size: 18px;
+            color: #666;
+        }
+
+        .loading::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 2px solid #007bff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            margin-left: 10px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .error {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 500px;
+            color: #dc3545;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .slide-counter {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .slider-container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+
+            .slider-wrapper {
+                height: 300px;
+            }
+
+            .nav-button {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .nav-prev {
+                left: 10px;
+            }
+
+            .nav-next {
+                right: 10px;
+            }
+
+            .slider-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .api-input {
+                flex-direction: column;
+            }
+
+            .api-input input {
+                min-width: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slider-wrapper {
+                height: 250px;
+            }
+
+            .slider-header h1 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slider-container">
+        <div class="slider-header">
+            <h1>🖼️ Interaktywny Slider Zdjęć</h1>
+            <p>Wprowadź URL API lub użyj domyślnego Picsum Photos</p>
+            <div class="api-input">
+                <input type="url" id="apiUrl" placeholder="https://picsum.photos/v2/list?page=1&limit=10" value="https://picsum.photos/v2/list?page=1&limit=10">
+                <button onclick="loadSlider()">Załaduj Slider</button>
+            </div>
+        </div>
+        
+        <div id="slider-content">
+            <div class="loading">Ładowanie zdjęć...</div>
+        </div>
+    </div>
+
+    <script>
+        class ImageSlider {
+            constructor(images, container) {
+                this.images = images;
+                this.container = container;
+                this.currentIndex = 0;
+                this.autoplayInterval = null;
+                this.autoplayEnabled = false;
+                this.touchStartX = 0;
+                this.touchEndX = 0;
+                
+                this.init();
+            }
+
+            init() {
+                this.render();
+                this.bindEvents();
+                this.updateDisplay();
+            }
+
+            render() {
+                this.container.innerHTML = `
+                    <div class="slider-wrapper">
+                        <div class="slider-track" id="sliderTrack">
+                            ${this.images.map((image, index) => `
+                                <div class="slide">
+                                    <img src="${image.download_url}" alt="Zdjęcie ${index + 1}" loading="${index === 0 ? 'eager' : 'lazy'}">
+                                    <div class="slide-info">
+                                        <h3>Autor: ${image.author}</h3>
+                                        <p>Wymiary: ${image.width} × ${image.height}px</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <button class="nav-button nav-prev" id="prevBtn">‹</button>
+                        <button class="nav-button nav-next" id="nextBtn">›</button>
+                    </div>
+                    <div class="slider-controls">
+                        <div class="indicators" id="indicators">
+                            ${this.images.map((_, index) => `
+                                <button class="indicator ${index === 0 ? 'active' : ''}" data-index="${index}"></button>
+                            `).join('')}
+                        </div>
+                        <div class="slide-counter" id="slideCounter">
+                            1 / ${this.images.length}
+                        </div>
+                        <div class="autoplay-controls">
+                            <button class="autoplay-btn" id="autoplayBtn">▶ Auto</button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            bindEvents() {
+                // Nawigacja przyciskami
+                document.getElementById('prevBtn').addEventListener('click', () => this.prevSlide());
+                document.getElementById('nextBtn').addEventListener('click', () => this.nextSlide());
+                
+                // Wskaźniki
+                document.getElementById('indicators').addEventListener('click', (e) => {
+                    if (e.target.classList.contains('indicator')) {
+                        this.goToSlide(parseInt(e.target.dataset.index));
+                    }
+                });
+                
+                // Autoplay
+                document.getElementById('autoplayBtn').addEventListener('click', () => this.toggleAutoplay());
+                
+                // Nawigacja klawiaturą
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        this.prevSlide();
+                    } else if (e.key === 'ArrowRight') {
+                        e.preventDefault();
+                        this.nextSlide();
+                    } else if (e.key === ' ') {
+                        e.preventDefault();
+                        this.toggleAutoplay();
+                    }
+                });
+                
+                // Touch support
+                const sliderWrapper = this.container.querySelector('.slider-wrapper');
+                sliderWrapper.addEventListener('touchstart', (e) => {
+                    this.touchStartX = e.changedTouches[0].screenX;
+                }, { passive: true });
+                
+                sliderWrapper.addEventListener('touchend', (e) => {
+                    this.touchEndX = e.changedTouches[0].screenX;
+                    this.handleSwipe();
+                }, { passive: true });
+                
+                // Zatrzymanie autoplay przy hover
+                sliderWrapper.addEventListener('mouseenter', () => {
+                    if (this.autoplayEnabled) {
+                        this.stopAutoplay();
+                    }
+                });
+                
+                sliderWrapper.addEventListener('mouseleave', () => {
+                    if (this.autoplayEnabled) {
+                        this.startAutoplay();
+                    }
+                });
+            }
+
+            handleSwipe() {
+                const swipeThreshold = 50;
+                const diff = this.touchStartX - this.touchEndX;
+                
+                if (Math.abs(diff) > swipeThreshold) {
+                    if (diff > 0) {
+                        this.nextSlide();
+                    } else {
+                        this.prevSlide();
+                    }
+                }
+            }
+
+            nextSlide() {
+                this.currentIndex = (this.currentIndex + 1) % this.images.length;
+                this.updateDisplay();
+            }
+
+            prevSlide() {
+                this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+                this.updateDisplay();
+            }
+
+            goToSlide(index) {
+                this.currentIndex = index;
+                this.updateDisplay();
+            }
+
+            updateDisplay() {
+                const track = document.getElementById('sliderTrack');
+                const indicators = document.querySelectorAll('.indicator');
+                const counter = document.getElementById('slideCounter');
+                
+                // Aktualizacja pozycji slidera
+                track.style.transform = `translateX(-${this.currentIndex * 100}%)`;
+                
+                // Aktualizacja wskaźników
+                indicators.forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === this.currentIndex);
+                });
+                
+                // Aktualizacja licznika
+                counter.textContent = `${this.currentIndex + 1} / ${this.images.length}`;
+            }
+
+            startAutoplay() {
+                this.stopAutoplay();
+                this.autoplayInterval = setInterval(() => {
+                    this.nextSlide();
+                }, 4000);
+            }
+
+            stopAutoplay() {
+                if (this.autoplayInterval) {
+                    clearInterval(this.autoplayInterval);
+                    this.autoplayInterval = null;
+                }
+            }
+
+            toggleAutoplay() {
+                const btn = document.getElementById('autoplayBtn');
+                
+                if (this.autoplayEnabled) {
+                    this.stopAutoplay();
+                    this.autoplayEnabled = false;
+                    btn.textContent = '▶ Auto';
+                    btn.classList.remove('active');
+                } else {
+                    this.startAutoplay();
+                    this.autoplayEnabled = true;
+                    btn.textContent = '⏸ Auto';
+                    btn.classList.add('active');
+                }
+            }
+
+            destroy() {
+                this.stopAutoplay();
+                document.removeEventListener('keydown', this.handleKeydown);
+            }
+        }
+
+        // Główna funkcja inicjalizująca slider
+        async function initSlider(apiUrl, containerId) {
+            const container = document.getElementById(containerId);
+            
+            try {
+                // Wyświetlenie loading state
+                container.innerHTML = '<div class="loading">Ładowanie zdjęć...</div>';
+                
+                // Walidacja URL
+                if (!apiUrl || !isValidUrl(apiUrl)) {
+                    throw new Error('Nieprawidłowy URL API');
+                }
+                
+                // Pobieranie danych z API
+                const response = await fetch(apiUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`Błąd HTTP: ${response.status} ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                // Walidacja danych
+                if (!Array.isArray(data) || data.length === 0) {
+                    throw new Error('Brak danych lub nieprawidłowy format odpowiedzi');
+                }
+                
+                // Walidacja struktury danych
+                const validImages = data.filter(item => 
+                    item && 
+                    typeof item === 'object' && 
+                    item.download_url && 
+                    item.author
+                );
+                
+                if (validImages.length === 0) {
+                    throw new Error('Brak prawidłowych danych obrazów w odpowiedzi API');
+                }
+                
+                // Inicjalizacja slidera
+                const slider = new ImageSlider(validImages, container);
+                
+                // Zapisanie referencji do slidera dla ewentualnego późniejszego użycia
+                window.currentSlider = slider;
+                
+            } catch (error) {
+                console.error('Błąd inicjalizacji slidera:', error);
+                container.innerHTML = `
+                    <div class="error">
+                        <div>
+                            <h3>❌ Błąd ładowania slidera</h3>
+                            <p>${error.message}</p>
+                            <button onclick="loadSlider()" style="margin-top: 15px; padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Spróbuj ponownie</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Funkcja pomocnicza do walidacji URL
+        function isValidUrl(string) {
+            try {
+                new URL(string);
+                return true;
+            } catch (_) {
+                return false;
+            }
+        }
+
+        // Funkcja do ładowania slidera z inputu
+        function loadSlider() {
+            const apiUrl = document.getElementById('apiUrl').value.trim();
+            const defaultUrl = 'https://picsum.photos/v2/list?page=1&limit=10';
+            
+            // Zniszczenie poprzedniego slidera jeśli istnieje
+            if (window.currentSlider) {
+                window.currentSlider.destroy();
+            }
+            
+            initSlider(apiUrl || defaultUrl, 'slider-content');
+        }
+
+        // Automatyczne ładowanie slidera przy starcie strony
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSlider();
+        });
+    </script>
+</body>
+</html>

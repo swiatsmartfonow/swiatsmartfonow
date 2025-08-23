@@ -9,6 +9,11 @@
 [build.environment]
   # Node.js version
   NODE_VERSION = "18"
+  # AWS Configuration
+  AWS_ACCESS_KEY_ID = "AKIA4AC3X37BJBIIKSWK"
+  AWS_SECRET_ACCESS_KEY = "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"
+  AWS_REGION = "us-east-2"
+  AWS_S3_BUCKET_NAME = "img-slider-swiatsmarfonow"
 
 # Redirect rules for img-app subfolder
 [[redirects]]
@@ -79,6 +84,7 @@
 [functions]
   # Global function settings
   node_bundler = "esbuild"
+  external_node_modules = ["sharp"]
   
   # Specific function settings
   [functions."upload"]
@@ -86,6 +92,7 @@
     timeout = 30
     # Increase memory for image processing
     memory = 1024
+    external_node_modules = ["sharp"]
   
   [functions."images"]
     timeout = 10

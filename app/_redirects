@@ -1,9 +1,0 @@
-# API redirects to Netlify Functions
-/api/images  /.netlify/functions/images  200
-/api/upload  /.netlify/functions/upload  200
-
-# Default page redirect
-/  /lista.html  200
-
-# Fallback for any other routes
-/*  /lista.html  404

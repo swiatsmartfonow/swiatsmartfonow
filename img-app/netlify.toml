@@ -1,0 +1,99 @@
+[build]
+  # Build command (not needed for static site)
+  command = "echo 'No build step required'"
+  # Directory to publish
+  publish = "."
+  # Functions directory
+  functions = "functions"
+
+[build.environment]
+  # Node.js version
+  NODE_VERSION = "18"
+
+# Redirect rules for img-app subfolder
+[[redirects]]
+  from = "/img-app/api/images"
+  to = "/.netlify/functions/images"
+  status = 200
+
+[[redirects]]
+  from = "/img-app/api/upload"
+  to = "/.netlify/functions/upload"
+  status = 200
+
+# Default redirect for img-app subfolder
+[[redirects]]
+  from = "/img-app"
+  to = "/lista.html"
+  status = 200
+
+[[redirects]]
+  from = "/img-app/"
+  to = "/lista.html"
+  status = 200
+
+# Specific redirects for img-app HTML files
+[[redirects]]
+  from = "/img-app/lista.html"
+  to = "/lista.html"
+  status = 200
+
+[[redirects]]
+  from = "/img-app/add.html"
+  to = "/add.html"
+  status = 200
+
+[[redirects]]
+  from = "/img-app/delete.html"
+  to = "/delete.html"
+  status = 200
+
+# Fallback for img-app routes
+[[redirects]]
+  from = "/img-app/*"
+  to = "/lista.html"
+  status = 404
+
+# Legacy API redirects (without subfolder)
+[[redirects]]
+  from = "/api/images"
+  to = "/.netlify/functions/images"
+  status = 200
+
+[[redirects]]
+  from = "/api/upload"
+  to = "/.netlify/functions/upload"
+  status = 200
+
+# Headers for security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;"
+
+# Function-specific settings
+[functions]
+  # Global function settings
+  node_bundler = "esbuild"
+  
+  # Specific function settings
+  [functions."upload"]
+    # Increase timeout for file uploads
+    timeout = 30
+    # Increase memory for image processing
+    memory = 1024
+  
+  [functions."images"]
+    timeout = 10
+    memory = 512
+
+# Environment variables (these should be set in Netlify dashboard)
+# DATABASE_URL
+# AWS_ACCESS_KEY_ID
+# AWS_SECRET_ACCESS_KEY
+# AWS_REGION
+# AWS_S3_BUCKET_NAME

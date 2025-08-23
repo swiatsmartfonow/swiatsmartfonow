@@ -21,12 +21,17 @@
   to = "/.netlify/functions/upload"
   status = 200
 
-# Default redirect for SPA (if needed)
+# Default redirect for SPA
+[[redirects]]
+  from = "/"
+  to = "/lista.html"
+  status = 200
+
+# Fallback for other routes
 [[redirects]]
   from = "/*"
   to = "/lista.html"
-  status = 200
-  conditions = {Role = ["admin"]}
+  status = 404
 
 # Headers for security
 [[headers]]

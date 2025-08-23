@@ -1,0 +1,12 @@
+{
+    "id": 1,
+    "author": "Anonymous",
+    "urls": {
+      "small": "https://bucket.s3.amazonaws.com/small-12345-image.png",
+      "medium": "https://bucket.s3.amazonaws.com/medium-12345-image.png",
+      "original": "https://bucket.s3.amazonaws.com/original-12345-image.png"
+    },
+    "width": 5000,
+    "height": 3333,
+    "created_at": "2025-08-23T04:00:00Z"
+  }

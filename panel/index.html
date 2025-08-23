@@ -1,0 +1,84 @@
+import { useState, useEffect } from "react";
+
+export default function ImagePanel() {
+  const [newUrl, setNewUrl] = useState("");
+  const [newAuthor, setNewAuthor] = useState("");
+  const [images, setImages] = useState([]);
+
+  const fetchImages = async () => {
+    const res = await fetch("/api/images");
+    const data = await res.json();
+    setImages(data);
+  };
+
+  useEffect(() => { fetchImages(); }, []);
+
+  const addImage = async () => {
+    if (!newUrl) return;
+    await fetch("/api/images", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url: newUrl, author: newAuthor })
+    });
+    setNewUrl(""); setNewAuthor("");
+    fetchImages();
+  };
+
+  const deleteImage = async (id) => {
+    await fetch("/api/images", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id })
+    });
+    fetchImages();
+  };
+
+  const updateImage = async (id, field, value) => {
+    const img = images.find(img => img.id === id);
+    const updated = { ...img, [field]: value };
+    await fetch("/api/images", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updated)
+    });
+    fetchImages();
+  };
+
+  return (
+    <div style={{ padding: "20px" }}>
+      <h2>Add Image URL</h2>
+      <input type="text" placeholder="URL" value={newUrl} onChange={e => setNewUrl(e.target.value)} style={{ width: "300px" }}/>
+      <input type="text" placeholder="Author" value={newAuthor} onChange={e => setNewAuthor(e.target.value)} style={{ width: "150px", marginLeft: "10px" }}/>
+      <button onClick={addImage} style={{ marginLeft: "10px" }}>Add</button>
+
+      <h3>Images</h3>
+      <table border="1" cellPadding="5" style={{ borderCollapse: "collapse" }}>
+        <thead>
+          <tr>
+            <th>Preview</th>
+            <th>URL</th>
+            <th>Author</th>
+            <th>Width</th>
+            <th>Height</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {images.map(img => (
+            <tr key={img.id}>
+              <td><img src={img.download_url} alt="" style={{ width: "100px", height: "auto" }}/></td>
+              <td><input type="text" value={img.url} onChange={e => updateImage(img.id, "url", e.target.value)} style={{ width: "250px" }}/></td>
+              <td><input type="text" value={img.author} onChange={e => updateImage(img.id, "author", e.target.value)} style={{ width: "120px" }}/></td>
+              <td>{img.width}</td>
+              <td>{img.height}</td>
+              <td><button onClick={() => deleteImage(img.id)}>Delete</button></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h3>Generated JSON</h3>
+      <pre>{JSON.stringify(images, null, 2)}</pre>
+    </div>
+  );
+}

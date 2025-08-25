@@ -75,6 +75,77 @@
         details[open] .accordion-icon {
             transform: rotate(180deg);
         }
+        
+        /* Photo Gallery Styles */
+        .controls {
+            opacity: 0;
+            transition: opacity 300ms ease-in-out;
+        }
+        .photo-container:hover .controls,
+        .photo-container:focus-within .controls {
+            opacity: 1;
+        }
+        .loader {
+            display: none;
+        }
+        
+        /* Ulepszone style dla płynnych przejść */
+        .photo-display {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .photo-display::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: inherit;
+            background-size: inherit;
+            background-position: inherit;
+            background-repeat: inherit;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 1;
+        }
+        
+        .photo-display.transitioning::before {
+            opacity: 1;
+        }
+        
+        /* Kontrola gradientu */
+        .controls.gradient-visible {
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+        }
+        
+        .controls.gradient-hidden {
+            background: transparent;
+        }
+        
+        /* Płynne przejścia dla slajdów */
+        .slide-transition-enter {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        
+        .slide-transition-enter-active {
+            transform: translateX(0);
+            opacity: 1;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s ease;
+        }
+        
+        .slide-transition-exit {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        .slide-transition-exit-active {
+            transform: translateX(-100%);
+            opacity: 0;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s ease;
+        }
     </style>
     
     <style>
@@ -668,6 +739,68 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Photo Gallery Section -->
+                    <div class="mt-16">
+                        <h3 class="text-2xl font-bold text-center mb-8 text-[var(--primary-color)]">Galeria zdjęć</h3>
+                        
+                        <!-- Główny kontener slidera -->
+                        <div class="relative flex w-full h-[60vh] items-center justify-center overflow-hidden rounded-2xl shadow-lg">
+                            <!-- Loader -->
+                            <div class="loader absolute inset-0 z-20 flex items-center justify-center bg-black/50 rounded-2xl">
+                                <div class="flex flex-col items-center">
+                                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--primary-color)]"></div>
+                                    <p class="text-white mt-4">Ładowanie zdjęć...</p>
+                                </div>
+                            </div>
+
+                            <div class="container photo-container relative flex h-full w-full items-center justify-center group">
+                                <!-- Wyświetlanie zdjęcia -->
+                                <div class="absolute inset-0">
+                                    <div class="photo-display h-full w-full bg-cover bg-center bg-no-repeat transition-all duration-500 rounded-2xl"></div>
+                                </div>
+
+                                <!-- Kontrolki -->
+                                <div class="controls gradient-visible absolute bottom-0 left-0 right-0 z-10 p-6 pt-12 rounded-b-2xl">
+                                    <div class="flex flex-col items-center justify-center">
+                                        <!-- Przyciski nawigacji -->
+                                        <div class="flex items-center justify-center space-x-8">
+                                            <button class="prev-btn rounded-full bg-white/20 p-3 backdrop-blur-sm transition-transform hover:scale-110 active:scale-95 focus:outline-none focus:ring-2 focus:ring-white/50">
+                                                <svg class="text-white" fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M15 18l-6-6 6-6"></path>
+                                                </svg>
+                                            </button>
+                                            
+                                            <button class="play-pause-btn rounded-full bg-[var(--primary-color)] p-5 text-white shadow-lg transition-transform hover:scale-110 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[var(--background-color)] focus:ring-[var(--primary-color)]">
+                                                <svg class="play-icon" fill="currentColor" height="32" viewBox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M8 5v14l11-7z"></path>
+                                                </svg>
+                                                <svg class="pause-icon hidden" fill="currentColor" height="32" viewBox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path>
+                                                </svg>
+                                            </button>
+                                            
+                                            <button class="next-btn rounded-full bg-white/20 p-3 backdrop-blur-sm transition-transform hover:scale-110 active:scale-95 focus:outline-none focus:ring-2 focus:ring-white/50">
+                                                <svg class="text-white" fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M9 18l6-6-6-6"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        
+                                        <!-- Kropki wskaźnika -->
+                                        <div class="dots-container mt-8 flex w-full flex-row items-center justify-center gap-2">
+                                            <!-- Kropki będą dodawane dynamicznie przez JavaScript -->
+                                        </div>
+                                        
+                                        <!-- Informacje o zdjęciu -->
+                                        <div class="image-info mt-4 text-center">
+                                            <!-- Informacje będą dodawane dynamicznie przez JavaScript -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
@@ -872,6 +1005,47 @@
                 createDots();
                 startSlider();
             }
+        });
+    </script>
+    
+    <!-- Photo Gallery Scripts -->
+    <script src="./foto.js"></script>
+    <script>
+        // Globalna zmienna dla instancji PhotoSlider
+        let photoSlider = null;
+
+        // Inicjalizacja galerii zdjęć po załadowaniu DOM
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sprawdzenie czy kontener galerii istnieje
+            const photoContainer = document.querySelector('.photo-container');
+            if (photoContainer) {
+                // Inicjalizacja PhotoSlider z konfiguracją podobną do demo
+                photoSlider = new PhotoSlider({
+                    apiUrl: 'https://galeria.kapitan-leszek.5m.pl/api/images',
+                    imageSize: 'medium',
+                    defaultImage: 'https://static.vecteezy.com/system/resources/thumbnails/004/141/669/small_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg',
+                    container: photoContainer,
+                    transition: 'fade',
+                    loop: true,
+                    transitionDuration: 500,
+                    autoplaySpeed: 4000, // 4 sekundy
+                    backgroundColor: 'transparent',
+                    showNavigation: true,
+                    showDate: false,
+                    showAuthor: false,
+                    showGradient: true,
+                    autoplay: true // Automatyczne uruchomienie
+                });
+                
+                console.log('Galeria zdjęć została zainicjalizowana');
+            }
+
+            // Obsługa błędów JavaScript dla galerii
+            window.addEventListener('error', function(e) {
+                if (e.filename && e.filename.includes('foto.js')) {
+                    console.warn('Błąd w galerii zdjęć:', e.error);
+                }
+            });
         });
     </script>
 </body>

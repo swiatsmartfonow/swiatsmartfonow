@@ -34,7 +34,6 @@ class PhotoSlider {
      * Inicjalizacja slidera
      */
     async init() {
-        this.showLoader();
         this.applyBackgroundColor();
         this.updateGradientVisibility();
         await this.loadImages();
@@ -82,7 +81,6 @@ class PhotoSlider {
             this.loadDefaultImages();
         } finally {
             this.isLoading = false;
-            this.hideLoader();
         }
     }
 
@@ -401,25 +399,7 @@ class PhotoSlider {
         }
     }
 
-    /**
-     * Pokazanie loadera
-     */
-    showLoader() {
-        const loader = document.querySelector('.photo-loader');
-        if (loader) {
-            loader.style.display = 'flex';
-        }
-    }
 
-    /**
-     * Ukrycie loadera
-     */
-    hideLoader() {
-        const loader = document.querySelector('.photo-loader');
-        if (loader) {
-            loader.style.display = 'none';
-        }
-    }
 
     /**
      * Odświeżenie zdjęć z API

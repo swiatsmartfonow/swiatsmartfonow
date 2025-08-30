@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" class="loading">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -9,6 +9,64 @@
     <link href="https://fonts.googleapis.com" rel="preconnect"/>
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+    
+    <!-- Critical CSS for Page Loader -->
+    <style>
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #141414 0%, #007AFF 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.3s ease-out;
+        }
+        .page-loader.fade-out {
+            opacity: 0;
+        }
+        .loader-container {
+            text-align: center;
+            color: white;
+        }
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #facc15;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .loading main {
+            opacity: 0;
+        }
+        .loading .relative.flex.size-full {
+            opacity: 0;
+        }
+        .loader-text {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .loader-spinner {
+                animation: none;
+                border: 3px solid #facc15;
+            }
+            .page-loader {
+                transition: none;
+            }
+        }
+    </style>
     
     <style type="text/tailwindcss">
         :root {
@@ -336,7 +394,7 @@
         .photo-container:focus-within .controls {
             opacity: 1;
         }
-        .loader {
+        .photo-loader {
             display: none;
         }
         
@@ -420,6 +478,13 @@
 </head>
 
 <body class="bg-[var(--background-color)] text-[var(--text-primary)] scroll-smooth">
+    <!-- Page Loader -->
+    <div class="page-loader" role="status" aria-label="Ładowanie strony">
+        <div class="loader-container">
+            <div class="loader-spinner" aria-hidden="true"></div>
+            <div class="loader-text">Ładowanie...</div>
+        </div>
+    </div>
     <div class="relative flex size-full min-h-screen flex-col justify-between overflow-x-hidden">
         
         <!-- Header/Navigation -->
@@ -490,7 +555,7 @@
                     <!-- Główny kontener slidera -->
                     <div class="relative flex w-full h-[60vh] items-center justify-center overflow-hidden rounded-2xl shadow-lg">
                         <!-- Loader -->
-                        <div class="loader absolute inset-0 z-20 flex items-center justify-center bg-black/50 rounded-2xl">
+                        <div class="photo-loader absolute inset-0 z-20 flex items-center justify-center bg-black/50 rounded-2xl">
                             <div class="flex flex-col items-center">
                                 <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--primary-color)]"></div>
                                 <p class="text-white mt-4">Ładowanie zdjęć...</p>
@@ -1279,6 +1344,110 @@
                         behavior: 'smooth',
                         block: 'start'
                     });
+        
+        // Page Loader Logic
+        let loaderHidden = false;
+        const minDisplayTime = 500;
+        const maxDisplayTime = 3000;
+        const startTime = Date.now();
+        
+        // Sprawdź czy loader istnieje
+        const pageLoader = document.querySelector('.page-loader');
+        if (!pageLoader) {
+            console.warn('Page loader nie został znaleziony!');
+            document.documentElement.classList.remove('loading');
+        } else {
+            console.log('Page loader zainicjalizowany');
+        }
+        
+        function hideLoader() {
+            if (loaderHidden) return;
+            loaderHidden = true;
+            
+            const loader = document.querySelector('.page-loader');
+            const html = document.documentElement;
+            
+            if (loader) {
+                console.log('Ukrywanie loadera...');
+                
+                // Dodaj klasę fade-out dla płynnego znikania
+                loader.classList.add('fade-out');
+                
+                // Usuń klasę loading z html natychmiast
+                html.classList.remove('loading');
+                
+                // Po zakończeniu animacji ukryj loader całkowicie
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    console.log('Loader ukryty');
+                    
+                    // Pokaż główną zawartość z płynnym przejściem
+                    const mainContent = document.querySelector('.relative.flex.size-full');
+                    if (mainContent) {
+                        mainContent.style.transition = 'opacity 0.3s ease-in';
+                        mainContent.style.opacity = '1';
+                    }
+                }, 300);
+            } else {
+                console.warn('Loader nie został znaleziony');
+                html.classList.remove('loading');
+            }
+        }
+        
+        // Sprawdź czy strona jest już załadowana
+        if (document.readyState === 'complete') {
+            console.log('Strona już załadowana, ukrywanie loadera');
+            const elapsed = Date.now() - startTime;
+            if (elapsed >= minDisplayTime) {
+                hideLoader();
+            } else {
+                setTimeout(hideLoader, minDisplayTime - elapsed);
+            }
+        } else {
+            console.log('Oczekiwanie na załadowanie strony...');
+            // Nasłuchuj na załadowanie strony
+            window.addEventListener('load', function() {
+                console.log('Strona załadowana, sprawdzanie czasu wyświetlania');
+                const elapsed = Date.now() - startTime;
+                if (elapsed < minDisplayTime) {
+                    setTimeout(hideLoader, minDisplayTime - elapsed);
+                } else {
+                    hideLoader();
+                }
+            });
+        }
+        
+        // Fallback timeout (max 3 sekundy)
+        setTimeout(() => {
+            if (!loaderHidden) {
+                console.warn('Loader ukryty przez timeout po 3 sekundach');
+                hideLoader();
+            }
+        }, maxDisplayTime);
+        
+        // Dodatkowe zabezpieczenie - sprawdź po krótkim czasie czy loader nadal istnieje
+        setTimeout(() => {
+            const loader = document.querySelector('.page-loader');
+            if (loader && loader.style.display !== 'none' && !loaderHidden) {
+                console.log('Wymuszenie ukrycia loadera po 1 sekundzie');
+                hideLoader();
+            }
+        }, 1000);
+        
+        // Dodatkowe zabezpieczenie dla DOMContentLoaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                // Jeśli DOM jest gotowy ale obrazy się jeszcze ładują
+                setTimeout(() => {
+                    if (!loaderHidden) {
+                        const elapsed = Date.now() - startTime;
+                        if (elapsed >= minDisplayTime) {
+                            hideLoader();
+                        }
+                    }
+                }, 1000);
+            });
+        }
                 }
             });
         });

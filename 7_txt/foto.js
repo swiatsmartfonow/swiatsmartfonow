@@ -405,7 +405,7 @@ class PhotoSlider {
      * Pokazanie loadera
      */
     showLoader() {
-        const loader = document.querySelector('.loader');
+        const loader = document.querySelector('.photo-loader');
         if (loader) {
             loader.style.display = 'flex';
         }
@@ -415,7 +415,7 @@ class PhotoSlider {
      * Ukrycie loadera
      */
     hideLoader() {
-        const loader = document.querySelector('.loader');
+        const loader = document.querySelector('.photo-loader');
         if (loader) {
             loader.style.display = 'none';
         }

@@ -1,0 +1,114 @@
+<html><head>
+    <meta charset="utf-8"/>
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+    <link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+    <title>Stitch Design</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style type="text/tailwindcss">
+          :root {
+            --primary-color: #0284c7;
+            --secondary-color: #fde047;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --bg-primary: #0f172a;
+            --bg-secondary: #1f2937;
+            --accent-color: #0ea5e9;
+          }
+        </style>
+    </head>
+    <body class="bg-[var(--bg-primary)] text-[var(--text-primary)]" style='font-family: Inter, "Noto Sans", sans-serif;'>
+    <div class="relative flex size-full min-h-screen flex-col group/design-root overflow-x-hidden">
+    <div class="layout-container flex h-full grow flex-col">
+    <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[var(--bg-secondary)] px-10 py-3">
+    <div class="flex items-center gap-8">
+    <div class="flex items-center gap-4 text-white">
+    <div class="size-6 text-[var(--primary-color)]">
+    <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+    <path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path>
+    </svg>
+    </div>
+    <h2 class="text-white text-xl font-bold leading-tight tracking-[-0.015em]">Stitch</h2>
+    </div>
+    <div class="flex items-center gap-9">
+    <a class="text-slate-300 hover:text-white text-sm font-medium leading-normal transition-colors" href="#">Home</a>
+    <a class="text-slate-300 hover:text-white text-sm font-medium leading-normal transition-colors" href="#">Explore</a>
+    <a class="text-slate-300 hover:text-white text-sm font-medium leading-normal transition-colors" href="#">Create</a>
+    </div>
+    </div>
+    <div class="flex flex-1 justify-end gap-4">
+    <label class="flex flex-col min-w-40 !h-10 max-w-64">
+    <div class="flex w-full flex-1 items-stretch rounded-md h-full">
+    <div class="text-slate-400 flex border-none bg-[var(--bg-secondary)] items-center justify-center pl-3 rounded-l-md border-r-0" data-icon="MagnifyingGlass" data-size="20px" data-weight="regular">
+    <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
+    <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+    </svg>
+    </div>
+    <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-md text-slate-300 focus:outline-0 focus:ring-2 focus:ring-[var(--primary-color)] border-none bg-[var(--bg-secondary)] focus:border-none h-full placeholder:text-slate-500 px-3 rounded-l-none border-l-0 text-sm font-normal leading-normal" placeholder="Search" value=""/>
+    </div>
+    </label>
+    <button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-md h-10 bg-[var(--bg-secondary)] text-slate-300 hover:text-white hover:bg-[#2b3546] transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+    <div class="text-slate-400" data-icon="Bell" data-size="20px" data-weight="regular">
+    <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
+    <path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"></path>
+    </svg>
+    </div>
+    </button>
+    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBrrnlHUkV_RetGS9Oi3natu3slWdFiRwQ5GLkgxmtIYiZxmEBrf1E4jNJlxOGM-PDUZI_Fktj-26Lq8eAfdmH0WB-Bm55Wdq9rVjo5NpD16AzXC_RZZei6kYOEEw7bHarxdISHr8fJR4q6xpYvlVEPaURm0FIvSEfVp9C7jSbxQWe7mu1OmNfyqcvaVciVvqVCWdFI09s7BqVW0BchSOp3YMPREkkdZQ3b80hBXA2Hdtj8adgqLf0uJRJ706VNQKlBa6W80GkCGzM");'></div>
+    </div>
+    </header>
+    <main class="px-16 lg:px-24 xl:px-40 flex flex-1 justify-center py-8">
+    <div class="layout-content-container flex flex-col max-w-4xl flex-1">
+    <div class="flex flex-wrap items-center justify-between gap-4 px-4 pb-4">
+    <h1 class="text-[var(--text-primary)] tracking-tight text-4xl font-bold leading-tight min-w-72">News and Promotions</h1>
+    <div class="flex gap-2 p-1 bg-[var(--bg-secondary)] rounded-md">
+    <button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-md bg-[#fde047] px-4 text-sm font-medium leading-normal text-slate-800">All</button>
+    <button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-md px-4 text-sm font-medium leading-normal text-slate-300 hover:bg-[#2b3546] transition-colors">Promotions</button>
+    <button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-md px-4 text-sm font-medium leading-normal text-slate-300 hover:bg-[#2b3546] transition-colors">Updates</button>
+    </div>
+    </div>
+    <div class="grid grid-cols-1 gap-6 p-4">
+    <div class="group flex items-center justify-between gap-8 bg-[var(--bg-secondary)] p-6 rounded-md hover:bg-[#2b3546] transition-colors cursor-pointer border-l-4 border-transparent hover:border-[#fde047]">
+    <div class="flex flex-col gap-2 flex-[2_2_0px]">
+    <div class="flex items-center gap-3">
+    <h3 class="text-[var(--text-primary)] text-lg font-bold leading-tight">New Feature: Collaborative Playlists</h3>
+    <span class="text-xs font-bold leading-none tracking-wide uppercase px-2 py-1 bg-[#f59e0b] text-white rounded">New</span>
+    </div>
+    <p class="text-[var(--text-secondary)] text-sm font-normal leading-normal">Create and share playlists with friends, making music discovery a social experience.</p>
+    </div>
+    <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-md flex-1" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuADDR27xznjhgbzsik7erfCj0FL7FKb5wRxy4dk3hzdle3BO7hMh0C47cwfGhDX0giigtpH7rIqS4FcFaCINo04hMZcHdQfRzTXOJ2IF96w0S783ofqmojFebBi7Tey5LRSOpknuc3lCIk6FaVZPJ_T_i2RAsacOJzDZPRCP3AfiRrapBgOOSlGr7jd53Gn9_lkCf0lnhuw6NUrxifdCNh4cTaOpA-l06-iQp0OszePo0KHhVMs70l6o3lwoQr8YFc-GBivvQ1WuKU");'></div>
+    </div>
+    <div class="group flex items-center justify-between gap-8 bg-amber-900/20 p-6 rounded-md hover:bg-amber-900/30 transition-colors cursor-pointer border-l-4 border-[#f59e0b]">
+    <div class="flex flex-col gap-2 flex-[2_2_0px]">
+    <h3 class="text-[var(--text-primary)] text-lg font-bold leading-tight">Summer Sale: 20% Off Premium</h3>
+    <p class="text-[var(--text-secondary)] text-sm font-normal leading-normal">Upgrade to Premium and enjoy ad-free listening, offline downloads, and more. Offer ends July 31st.</p>
+    </div>
+    <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-md flex-1" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBxht2tTfSzRz8fQcLkgdXEvbjmBsKb52BagHVgDYIzLPCrz-tWnDoM8Of2p3sGnUBUDp8JhuDMjqwGEWyKvYNUC13HxXc8yl54sbE-rmsdz2pUvKPxMjCEfrn_02SfwuSBatFcmIqjL9LWCq7YlfZjp_b6SZtxGtSJv8c5xBv4y8kpkAgTG94tbYb58kxwecJ8aQ2oLuHz3HBgn9iyu9u9Wde3NJf9VQPEaECU1lCRBnTy3ffTuRbWUmb_lC1Yj8KDrzdJjonZXaA");'></div>
+    </div>
+    <div class="group flex items-center justify-between gap-8 bg-[var(--bg-secondary)] p-6 rounded-md hover:bg-[#2b3546] transition-colors cursor-pointer border-l-4 border-transparent hover:border-[#fde047]">
+    <div class="flex flex-col gap-2 flex-[2_2_0px]">
+    <h3 class="text-[var(--text-primary)] text-lg font-bold leading-tight">Artist Spotlight: The Indie Collective</h3>
+    <p class="text-[var(--text-secondary)] text-sm font-normal leading-normal">Discover emerging artists and their latest tracks in our curated playlist.</p>
+    </div>
+    <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-md flex-1" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDmyGme-QxeuCdlqSZVWZMh-V70YfupSVt66jS3pDm8ymVanuRdByK3FASPta0Eyd4UzxN8IU8Kb77O4Kk8uT6bHhmXQORrUWu8F61Xd50-UNLGZlu_Fp5H_BSYx71zoNCGRUiCs561l8GnYCMFvo6uHg-rVros4TQR_Sa1YVbX5HoHM11Q3k0rxGqgrzGUZYJizb4OHQ1ovkzH-pe2Jc1Adzjm2kUAT2tRzK7BG5iuJzng552irjhaNmVVg4WF3P57e_1YwQiz5dM");'></div>
+    </div>
+    <div class="group flex items-center justify-between gap-8 bg-[var(--bg-secondary)] p-6 rounded-md hover:bg-[#2b3546] transition-colors cursor-pointer border-l-4 border-transparent hover:border-[#fde047]">
+    <div class="flex flex-col gap-2 flex-[2_2_0px]">
+    <h3 class="text-[var(--text-primary)] text-lg font-bold leading-tight">Podcast Recommendations: True Crime</h3>
+    <p class="text-[var(--text-secondary)] text-sm font-normal leading-normal">Dive into gripping true crime stories with our top podcast picks.</p>
+    </div>
+    <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-md flex-1" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCyE9aASJDRaCr4wu1SnTeC6wu4GAY_JIUI2PrlfQVIz_NTI39bIiw56jjhXgeBqK_uyoGd6hWrRA2aoy02ctx0bFMCWCMrtTzl_gPFpQLwOzL-jRDg7RXAoKqZ6nD6Mi6IB-1llNwB34gf-2ZGrJ9llsAJXyTmF2lKlKyW-uYPYzTEX90fPea3d9q7RuoefywcrwWSG-wX2UX-aOw_gD6ndfY4usqirSf91tq0mckN0rGLBZZk80nT446gxspCYeoT1ecSRaZ4uJg");'></div>
+    </div>
+    <div class="group flex items-center justify-between gap-8 bg-[var(--bg-secondary)] p-6 rounded-md hover:bg-[#2b3546] transition-colors cursor-pointer border-l-4 border-transparent hover:border-[#fde047]">
+    <div class="flex flex-col gap-2 flex-[2_2_0px]">
+    <h3 class="text-[var(--text-primary)] text-lg font-bold leading-tight">New Music Releases: This Week's Hits</h3>
+    <p class="text-[var(--text-secondary)] text-sm font-normal leading-normal">Stay up-to-date with the latest chart-topping singles and albums.</p>
+    </div>
+    <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-md flex-1" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCRqMwS2-E1sDkTTIjlhZZbtHvzGO2dI9xymfd_UnK-IJWKOZm3jP5fZ1gntWR3e5R1LREAcOrKf2XxLmUqo9V1LA9tlcoTaPQ4krGC_XOBK9qwyVIqlww7PHiY-JhpjwpeAYINXbHTD7ofYCkl4AoMNkQQ9NNFJnokJ-j_ngDx8PvDm40QL0bin98WLTZjEokBP7Rqr0pqM1AjjtzViTy9eUIcIeeCMcCluSRsYeRWhjHE_404Q4rhp70nMLX71TKpQ7ga_Z6KLe8");'></div>
+    </div>
+    </div>
+    </div>
+    </main>
+    </div>
+    </div>
+    </body></html>

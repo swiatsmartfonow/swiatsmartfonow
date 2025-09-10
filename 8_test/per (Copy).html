@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<title>Stitch Design</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<style type="text/tailwindcss">
+      :root {
+        --md-sys-color-primary: #6750a4;
+        --md-sys-color-on-primary: #ffffff;
+        --md-sys-color-primary-container: #eaddff;
+        --md-sys-color-on-primary-container: #21005d;
+        --md-sys-color-secondary: #625b71;
+        --md-sys-color-on-secondary: #ffffff;
+        --md-sys-color-secondary-container: #e8def8;
+        --md-sys-color-on-secondary-container: #1d192b;
+        --md-sys-color-tertiary: #7d5260;
+        --md-sys-color-on-tertiary: #ffffff;
+        --md-sys-color-tertiary-container: #ffd8e4;
+        --md-sys-color-on-tertiary-container: #31111d;
+        --md-sys-color-error: #b3261e;
+        --md-sys-color-on-error: #ffffff;
+        --md-sys-color-error-container: #f9dedc;
+        --md-sys-color-on-error-container: #410e0b;
+        --md-sys-color-background: #fffbfe;
+        --md-sys-color-on-background: #1c1b1f;
+        --md-sys-color-surface: #fffbfe;
+        --md-sys-color-on-surface: #1c1b1f;
+        --md-sys-color-surface-variant: #e7e0ec;
+        --md-sys-color-on-surface-variant: #49454f;
+        --md-sys-color-outline: #79747e;
+        --md-sys-color-shadow: #000000;
+        --md-sys-color-inverse-surface: #313033;
+        --md-sys-color-inverse-on-surface: #f4eff4;
+        --md-sys-color-inverse-primary: #d0bcff;
+      }
+      body {
+        font-family: 'Roboto', sans-serif;
+      }
+    </style>
+</head>
+<body class="bg-[var(--md-sys-color-background)] text-[var(--md-sys-color-on-background)]">
+<div class="flex flex-col min-h-screen">
+<header class="flex items-center justify-between px-4 sm:px-6 h-16 bg-[var(--md-sys-color-surface)] shadow-md">
+<div class="flex items-center gap-4">
+<button class="md:hidden">
+<span class="material-icons text-[var(--md-sys-color-on-surface)]">menu</span>
+</button>
+<h1 class="text-xl font-medium text-[var(--md-sys-color-on-surface)]">
+            Messages
+          </h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-full hover:bg-gray-200">
+<span class="material-icons text-[var(--md-sys-color-on-surface)]">search</span>
+</button>
+<div class="size-10 rounded-full bg-center bg-no-repeat bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAVa_jNzca5Ux5zmzuZ1PJxFDloNgClHMvt2fL2LVfEuQxLh0AVsdo31yYN-gORVK7453Edh0Ch9N9zcGJTFBBonbsqzWAVbCdg6xCQd_qpQXEhPFgZzUrg1WEWji-jxCgrQ-exDtpz8gZKDMXXUQ2hj1qBrFRFvAC3lxqVrcl7iJz4BYeK84Pum0CuBKaSMNwPYD7Bx1cpUVVKz0LRFQ7YJbKaa5FaW2VrnT9lTkHDMa_l73u99c8Z_3OQeOSAZtVKJExG49BXvLs");'></div>
+</div>
+</header>
+<main class="flex-grow p-4 sm:p-6 lg:p-8">
+<div class="max-w-4xl mx-auto space-y-6">
+<div class="bg-[var(--md-sys-color-surface-variant)] rounded-xl shadow-sm overflow-hidden">
+<div class="p-4">
+<div class="flex items-start gap-4">
+<div class="size-10 rounded-full bg-center bg-no-repeat bg-cover flex-shrink-0" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCsKDdlCmIeJZn20nkGOzPTUhA3az5gVVgzePdfV2--3bXAx3Wo4ngBdk7HxRHIFqDQlW9LP5fkVuK4CtCZlmyrAtzaoYCm7yam6hhWOqMisaxFHNQtpvAN5y-piFL7pLSCQhwKTXxrqTZBDVye566B0AzvUf_Zz4bZOQOs2uBPIj7-jg2MrCiR7oy4MhJYIkfdupjfa98lr5rc6xf9jXRjDQIUCEwMilO1cETd_0qybMadQcuxEkb9lTgXokMHelLZbnpSjiOBsyc");'></div>
+<div class="flex-grow">
+<div class="flex items-center justify-between">
+<p class="font-medium text-[var(--md-sys-color-on-surface-variant)]">Wymiana Baterii</p>
+<p class="text-sm text-[var(--md-sys-color-on-surface-variant)]">2h ago</p>
+</div>
+<p class="mt-1 text-[var(--md-sys-color-on-surface-variant)]">
+    Przywracanie długiego czasu pracy telefonu z wykorzystaniem wyłącznie oryginalnych baterii najwyższej jakości
+                  </p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-1">
+<div class="col-span-2 row-span-2">
+<div class="w-full h-full bg-center bg-no-repeat bg-cover" style='background-image: url("foto/Wymiana Baterii.JPG"); aspect-ratio: 1/1;'></div>
+</div>
+<div class="w-full bg-center bg-no-repeat bg-cover" style='background-image: url("foto/Wymiana-Baterii-2.JPG"); aspect-ratio: 1/1;'></div>
+<div class="w-full bg-center bg-no-repeat bg-cover" style='background-image: url("foto/Wymiana-Baterii-4.JPG"); aspect-ratio: 1/1;'></div>
+</div>
+<div class="flex justify-start gap-1 px-4 py-2">
+<button class="flex items-center gap-1.5 p-2 rounded-full text-[var(--md-sys-color-on-surface-variant)] hover:bg-[var(--md-sys-color-primary-container)] hover:text-[var(--md-sys-color-on-primary-container)]">
+<span class="material-icons text-xl">favorite_border</span>
+<span class="text-sm font-medium">23</span>
+</button>
+<button class="flex items-center gap-1.5 p-2 rounded-full text-[var(--md-sys-color-on-surface-variant)] hover:bg-[var(--md-sys-color-primary-container)] hover:text-[var(--md-sys-color-on-primary-container)]">
+<span class="material-icons text-xl">chat_bubble_outline</span>
+<span class="text-sm font-medium">5</span>
+</button>
+<button class="flex items-center gap-1.5 p-2 rounded-full text-[var(--md-sys-color-on-surface-variant)] hover:bg-[var(--md-sys-color-primary-container)] hover:text-[var(--md-sys-color-on-primary-container)]">
+<span class="material-icons text-xl">share</span>
+<span class="text-sm font-medium">12</span>
+</button>
+</div>
+</div>
+<div class="bg-[var(--md-sys-color-surface-variant)] rounded-xl shadow-sm overflow-hidden">
+<div class="p-4">
+<div class="flex items-start gap-4">
+<div class="size-10 rounded-full bg-center bg-no-repeat bg-cover flex-shrink-0" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD4wU5dbsmL4W_lBoc_kJF3w3XgFpy4TKffVsfE3ZjaWSKJAV7pdHIFDF6HQqETjSEth-IjQQXw3-asQtSxg_AX2ZxVpX4d6FztIsjTLMKtJwF4hz3JN1mHMsrbaFd3s1XbMgd5NToEv9X_xPlOeYLv_D6AxnUlI9cXpV_E5v-zLyeSva9SEoSm0MhNcBlXnijx8EQ_TXEJbLvYz2VbSix4A1anKDRolzGUD0K7cB92hbyzwZ2ckzInp3Vbv6pNDmMj-WIPVvnXnzc");'></div>
+<div class="flex-grow">
+<div class="flex items-center justify-between">
+<p class="font-medium text-[var(--md-sys-color-on-surface-variant)]">Wymiana Ekranu</p>
+<p class="text-sm text-[var(--md-sys-color-on-surface-variant)]">1d ago</p>
+</div>
+<p class="mt-1 text-[var(--md-sys-color-on-surface-variant)]">
+    Profesjonalna wymiana uszkodzonych ekranów iPhone, Samsung, Huawei i innych marek z gwarancją jakości wykonania          </p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-1">
+<div class="w-full bg-center bg-no-repeat bg-cover" style='background-image: url("foto/Wymiana-Ekranu.JPG"); aspect-ratio: 1/1;'></div>
+<div class="w-full bg-center bg-no-repeat bg-cover" style='background-image: url("foto/Wymiana-Ekranu-2.JPG"); aspect-ratio: 1/1;'></div>
+</div>
+<div class="flex justify-start gap-1 px-4 py-2">
+<button class="flex items-center gap-1.5 p-2 rounded-full text-[var(--md-sys-color-on-surface-variant)] hover:bg-[var(--md-sys-color-primary-container)] hover:text-[var(--md-sys-color-on-primary-container)]">
+<span class="material-icons text-xl">favorite_border</span>
+<span class="text-sm font-medium">18</span>
+</button>
+<button class="flex items-center gap-1.5 p-2 rounded-full text-[var(--md-sys-color-on-surface-variant)] hover:bg-[var(--md-sys-color-primary-container)] hover:text-[var(--md-sys-color-on-primary-container)]">
+<span class="material-icons text-xl">chat_bubble_outline</span>
+<span class="text-sm font-medium">3</span>
+</button>
+<button class="flex items-center gap-1.5 p-2 rounded-full text-[var(--md-sys-color-on-surface-variant)] hover:bg-[var(--md-sys-color-primary-container)] hover:text-[var(--md-sys-color-on-primary-container)]">
+<span class="material-icons text-xl">share</span>
+<span class="text-sm font-medium">8</span>
+</button>
+</div>
+</div>
+<div class="bg-[var(--md-sys-color-surface-variant)] rounded-xl shadow-sm overflow-hidden">
+<div class="p-4">
+<div class="flex items-start gap-4">
+<div class="size-10 rounded-full bg-center bg-no-repeat bg-cover flex-shrink-0" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCV7QIaRtEM0XilIwxBA7GxTsbDcRMiKENHJau61P5Rj3wZrWnpf7nUQtyhLaU9CY2sEKtEZngoXbGHqaNa2r_Bj65az6_Jp7GWDW2mTzGH_L6TEVeOeHgSF6mCb7GEewJ_4SOtDzvbxYqysGkyrhV2TfrN4kJ-e_3mfH3H9YJofPtcHq0LjrWelIwrxvTIazdhWytRnoQ9weByE93cNv4fZXpLZjE6u8eHarFSijw9SIjLpuN3IHDDB9gklRUhNsHjdomNCTpbocA");'></div>
+<div class="flex-grow">
+<div class="flex items-center justify-between">
+<p class="font-medium text-[var(--md-sys-color-on-surface-variant)]">Zalanie woda</p>
+<p class="text-sm text-[var(--md-sys-color-on-surface-variant)]">2d ago</p>
+</div>
+<p class="mt-1 text-[var(--md-sys-color-on-surface-variant)]">
+    Specjalistyczne czyszczenie i naprawa telefonów po kontakcie z wodą lub innymi płynami
+                  </p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-1">
+<div class="md:col-span-2 md:row-span-2">
+<div class="w-full h-full bg-center bg-no-repeat bg-cover" style='background-image: url("foto/Zalanie-woda.JPG"); aspect-ratio: 1/1;'></div>
+</div>
+<div class="w-full bg-center bg-no-repeat bg-cover" style='background-image: url("foto/Zalanie woda-2.JPG"); aspect-ratio: 1/1;'></div>
+<div class="w-full bg-center bg-no-repeat bg-cover" style='background-image: url("foto/Zalanie-woda-3.JPG"); aspect-ratio: 1/1;'></div>
+<div class="w-full bg-center bg-no-repeat bg-cover" style='background-image: url("foto/Zalanie woda-4.JPG"); aspect-ratio: 1/1;'></div>
+</div>
+<div class="flex justify-start gap-1 px-4 py-2">
+<button class="flex items-center gap-1.5 p-2 rounded-full text-[var(--md-sys-color-on-surface-variant)] hover:bg-[var(--md-sys-color-primary-container)] hover:text-[var(--md-sys-color-on-primary-container)]">
+<span class="material-icons text-xl">favorite_border</span>
+<span class="text-sm font-medium">35</span>
+</button>
+<button class="flex items-center gap-1.5 p-2 rounded-full text-[var(--md-sys-color-on-surface-variant)] hover:bg-[var(--md-sys-color-primary-container)] hover:text-[var(--md-sys-color-on-primary-container)]">
+<span class="material-icons text-xl">chat_bubble_outline</span>
+<span class="text-sm font-medium">7</span>
+</button>
+<button class="flex items-center gap-1.5 p-2 rounded-full text-[var(--md-sys-color-on-surface-variant)] hover:bg-[var(--md-sys-color-primary-container)] hover:text-[var(--md-sys-color-on-primary-container)]">
+<span class="material-icons text-xl">share</span>
+<span class="text-sm font-medium">15</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<div class="fixed bottom-6 right-6">
+<button class="flex items-center justify-center h-14 w-14 rounded-2xl bg-[var(--md-sys-color-primary-container)] text-[var(--md-sys-color-on-primary-container)] shadow-lg hover:shadow-xl transition-shadow">
+<span class="material-icons text-2xl">add</span>
+</button>
+</div>
+</div>
+
+</body></html>

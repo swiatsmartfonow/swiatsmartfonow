@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="pl" class="loading">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Świat Smartfonów - Profesjonalny Serwis Telefonów</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+    
+    <!-- Critical CSS for Page Loader -->
+    <style>
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #141414 0%, #007AFF 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.3s ease-out;
+        }
+        
+        .page-loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loader-container {
+            text-align: center;
+            color: white;
+        }
+        
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #facc15;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        .loader-text {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin: 0;
+            opacity: 0.9;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* Hide main content while loading */
+        .loading main {
+            opacity: 0;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .loader-spinner {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .loader-text {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Respect reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            .loader-spinner {
+                animation: none;
+                border-top-color: #facc15;
+            }
+        }
+    </style>
+
+    <style type="text/css">
+        /* Tailwind CSS directives - disable CSS validation for @apply rules */
+        /* stylelint-disable */
+        :root {
+            --primary-color: #141414;
+            --secondary-color: #007AFF;
+            --accent-color: #4F46E5;
+            --background-color: #F9F9F9;
+            --text-primary: #1C1C1E;
+            --text-secondary: #636366;
+            --yellow-accent: #facc15;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .service-card {
+            @apply bg-white rounded-2xl shadow-md overflow-hidden transition-all duration-300 ease-in-out hover:transform hover:-translate-y-2 hover:shadow-xl;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+        .slider-container {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+        .slider-dots {
+            position: absolute;
+            bottom: 1.25rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+        }
+        .dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 9999px;
+            background-color: var(--text-secondary);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .dot.active {
+            background-color: var(--yellow-accent);
+            width: 1.5rem;
+        }
+        /* Enhanced FAQ Accordion Styles */
+        .accordion-item {
+            @apply border border-gray-200 rounded-xl mb-4 bg-white shadow-sm transition-all duration-300 hover:shadow-md;
+            border-color: #e5e7eb;
+        }
+        
+        .accordion-item:hover {
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        
+        .accordion-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .accordion-summary {
+            @apply flex cursor-pointer items-center justify-between gap-4 p-6 rounded-xl transition-all duration-300;
+        }
+        
+        .accordion-summary:hover {
+            background: linear-gradient(to right, rgba(59, 130, 246, 0.05), rgba(37, 99, 235, 0.05));
+        }
+        
+        .accordion-question {
+            @apply text-lg font-bold text-[var(--text-primary)] leading-relaxed;
+        }
+        
+        .accordion-icon {
+            @apply text-[var(--secondary-color)] transition-all duration-300 flex-shrink-0;
+            width: 28px;
+            height: 28px;
+        }
+        
+        .accordion-icon:hover {
+            @apply text-[var(--primary-color)] scale-110;
+        }
+        
+        .accordion-answer {
+            @apply text-base font-normal text-[var(--text-secondary)] px-8 py-8 leading-loose;
+            border-top: 1px solid #f3f4f6;
+            margin-top: -1px;
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            line-height: 1.8;
+            letter-spacing: 0.025em;
+        }
+        
+        details[open] .accordion-icon {
+            transform: rotate(180deg);
+            color: var(--primary-color);
+        }
+        
+        details[open] .accordion-item {
+            border-color: var(--secondary-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+        
+        details[open] .accordion-summary {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(37, 99, 235, 0.08) 100%);
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        /* Responsive FAQ Styles */
+        @media (max-width: 768px) {
+            .accordion-question {
+                @apply text-base font-semibold;
+            }
+            
+            .accordion-answer {
+                @apply text-sm px-4 pb-4;
+            }
+            
+            .accordion-summary {
+                @apply p-4;
+            }
+            
+            .accordion-icon {
+                width: 24px;
+                height: 24px;
+            }
+        }
+        
+        /* FAQ Section Container Enhancement */
+        .faq-container {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f1f5f9 100%);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        @media (max-width: 768px) {
+            .faq-container {
+                padding: 1rem;
+                border-radius: 16px;
+            }
+        }
+        
+        /* Premium Services Section Styles */
+        .premium-services-container {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+            border-radius: 2rem;
+            padding: 3rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .premium-services-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .premium-service-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .premium-service-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        
+        .premium-service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .premium-service-card:hover::before {
+            opacity: 1;
+        }
+        
+        .service-icon-container {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 1rem;
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .premium-service-card:hover .service-icon-container {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .service-icon {
+            width: 2rem;
+            height: 2rem;
+            color: #64748b;
+            transition: all 0.3s ease;
+        }
+        
+        .premium-service-card:hover .service-icon {
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .premium-cta-button {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.875rem 1.75rem;
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border: 2px solid #e2e8f0;
+            border-radius: 0.875rem;
+            font-weight: 600;
+            color: #475569;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            margin-top: auto;
+        }
+        
+        .premium-cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+        
+        .premium-cta-button:hover::before {
+            left: 0;
+        }
+        
+        .premium-cta-button:hover {
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+        
+        .premium-cta-button:focus {
+            outline: 2px solid #3b82f6;
+            outline-offset: 2px;
+        }
+        
+        @media (max-width: 768px) {
+            .premium-services-container {
+                padding: 2rem 1rem;
+                border-radius: 1.5rem;
+            }
+            
+            .service-icon-container {
+                width: 3rem;
+                height: 3rem;
+                margin-bottom: 1rem;
+            }
+            
+            .service-icon {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+            
+            .premium-cta-button {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.875rem;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .premium-service-card,
+            .premium-cta-button,
+            .service-icon-container,
+            .service-icon {
+                transition: none;
+            }
+            
+            .premium-service-card:hover {
+                transform: none;
+            }
+            
+            .premium-service-card:hover .service-icon-container {
+                transform: none;
+            }
+        }
+        
+        /* Photo Gallery Styles */
+        .controls {
+            opacity: 0;
+            transition: opacity 300ms ease-in-out;
+        }
+        .photo-container:hover .controls,
+        .photo-container:focus-within .controls {
+            opacity: 1;
+        }
+
+        
+        /* Ulepszone style dla płynnych przejść */
+        .photo-display {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .photo-display::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: inherit;
+            background-size: inherit;
+            background-position: inherit;
+            background-repeat: inherit;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 1;
+        }
+        
+        .photo-display.transitioning::before {
+            opacity: 1;
+        }
+        
+        /* Kontrola gradientu */
+        .controls.gradient-visible {
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+        }
+        
+        .controls.gradient-hidden {
+            background: transparent;
+        }
+        
+        /* Płynne przejścia dla slajdów */
+        .slide-transition-enter {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        
+        .slide-transition-enter-active {
+            transform: translateX(0);
+            opacity: 1;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s ease;
+        }
+        
+        .slide-transition-exit {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        .slide-transition-exit-active {
+            transform: translateX(-100%);
+            opacity: 0;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s ease;
+        }
+        /* stylelint-enable */
+    </style>
+    
+    <style>
+        body {
+            min-height: 100vh;
+        }
+        .group:hover .group-hover\:block {
+            display: block;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        .scroll-smooth {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+
+<body class="bg-[var(--background-color)] text-[var(--text-primary)] scroll-smooth">
+
+    <!-- Page Loader -->
+    <div id="page-loader" class="page-loader">
+        <div class="loader-container">
+            <div class="loader-spinner"></div>
+            <p class="loader-text">Ładowanie...</p>
+        </div>
+    </div>
+
+    <div class="relative flex size-full min-h-screen flex-col justify-between overflow-x-hidden">
+        
+        <!-- Header/Navigation -->
+        <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm">
+            <div class="container mx-auto flex items-center justify-between p-4">
+                <a class="flex items-center gap-2 text-xl font-bold" href="#home">
+                    <img src="img/logo.svg" alt="Świat Smartfonów" width="160" height="56" class="object-contain">
+                </a>
+                
+                <nav class="hidden md:flex items-center gap-6">
+                    <a href="#uslugi" class="text-sm font-medium hover:text-[var(--secondary-color)] transition-colors">Usługi</a>
+                    <a href="#opinie" class="text-sm font-medium hover:text-[var(--secondary-color)] transition-colors">Opinie</a>
+                    <a href="#galeria" class="text-sm font-medium hover:text-[var(--secondary-color)] transition-colors">Galeria</a>
+                    <a href="#faq" class="text-sm font-medium hover:text-[var(--secondary-color)] transition-colors">FAQ</a>
+                    <a href="#kontakt" class="text-sm font-medium hover:text-[var(--secondary-color)] transition-colors">Kontakt</a>
+                </nav>
+                
+                <div class="relative group md:hidden">
+                    <button class="p-2">
+                        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="28">
+                            <line x1="4" x2="20" y1="12" y2="12"></line>
+                            <line x1="4" x2="20" y1="6" y2="6"></line>
+                            <line x1="4" x2="20" y1="18" y2="18"></line>
+                        </svg>
+                    </button>
+                    <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20 hidden group-hover:block">
+                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#uslugi">Usługi</a>
+                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#opinie">Opinie</a>
+                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#galeria">Galeria</a>
+                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#faq">FAQ</a>
+                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#kontakt">Kontakt</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Hero Section -->
+            <section id="home" class="relative min-h-[80vh] flex items-center justify-center">
+                <div class="absolute inset-0 hero-gradient"></div>
+                <div class="absolute inset-0 bg-black/30" style="background-image: url('img/background.avif'); background-size: cover; background-position: center; background-repeat: no-repeat; opacity: 0.1;"></div>
+                <div class="relative z-10 text-center text-white px-6 max-w-4xl mx-auto">
+                    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight tracking-tighter mb-6 float-animation">
+                        Świat Smartfonów
+                    </h1>
+                    <p class="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+                        Professional services
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="https://naprawa.kapitan-leszek.5m.pl/" target="_blank" class="inline-block rounded-full bg-[var(--yellow-accent)] px-8 py-4 text-lg font-bold text-[var(--primary-color)] shadow-lg transition-all hover:scale-105 hover:shadow-xl text-center">
+                            Zgłoś naprawę online
+                        </a>
+                        <a href="#uslugi" class="inline-block rounded-full border-2 border-white px-8 py-4 text-lg font-bold text-white transition-all hover:bg-white hover:text-[var(--primary-color)] text-center">
+                            Zobacz Usługi
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 1. Nowości i promocje -->
+            <section class="py-16 px-4 bg-white">
+                <div class="container mx-auto">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4">Nowości i promocje</h2>
+                        <p class="text-[var(--text-secondary)] text-lg">Sprawdź najnowsze oferty i promocje na naprawy</p>
+                    </div>
+                    
+                    <!-- Główny kontener slidera -->
+                    <div class="relative flex w-full h-[60vh] items-center justify-center overflow-hidden rounded-2xl shadow-lg">
+
+
+                        <div class="container photo-container relative flex h-full w-full items-center justify-center group">
+                            <!-- Wyświetlanie zdjęcia -->
+                            <div class="absolute inset-0">
+                                <div class="photo-display h-full w-full bg-cover bg-center bg-no-repeat transition-all duration-500 rounded-2xl"></div>
+                            </div>
+
+                            <!-- Kontrolki -->
+                            <div class="controls gradient-visible absolute bottom-0 left-0 right-0 z-10 p-6 pt-12 rounded-b-2xl">
+                                <div class="flex flex-col items-center justify-center">
+                                    <!-- Przyciski nawigacji -->
+                                    <div class="flex items-center justify-center space-x-8">
+                                        <button class="prev-btn rounded-full bg-white/20 p-3 backdrop-blur-sm transition-transform hover:scale-110 active:scale-95 focus:outline-none focus:ring-2 focus:ring-white/50">
+                                            <svg class="text-white" fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M15 18l-6-6 6-6"></path>
+                                            </svg>
+                                        </button>
+                                        
+                                        <button class="play-pause-btn rounded-full bg-[var(--primary-color)] p-5 text-white shadow-lg transition-transform hover:scale-110 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[var(--background-color)] focus:ring-[var(--primary-color)]">
+                                            <svg class="play-icon" fill="currentColor" height="32" viewBox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M8 5v14l11-7z"></path>
+                                            </svg>
+                                            <svg class="pause-icon hidden" fill="currentColor" height="32" viewBox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path>
+                                            </svg>
+                                        </button>
+                                        
+                                        <button class="next-btn rounded-full bg-white/20 p-3 backdrop-blur-sm transition-transform hover:scale-110 active:scale-95 focus:outline-none focus:ring-2 focus:ring-white/50">
+                                            <svg class="text-white" fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9 18l6-6-6-6"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- Kropki wskaźnika -->
+                                    <div class="dots-container mt-8 flex w-full flex-row items-center justify-center gap-2">
+                                        <!-- Kropki będą dodawane dynamicznie przez JavaScript -->
+                                    </div>
+                                    
+                                    <!-- Informacje o zdjęciu -->
+                                    <div class="image-info mt-4 text-center">
+                                        <!-- Informacje będą dodawane dynamicznie przez JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. Jak to działa? -->
+            <section class="py-16 px-4 bg-gray-50">
+                <div class="container mx-auto">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4">Jak to działa?</h2>
+                        <p class="text-[var(--text-secondary)] text-lg max-w-2xl mx-auto">
+                            Przejrzysty schemat kroków naprawy
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="text-center">
+                            <div class="bg-[var(--secondary-color)] text-white rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center text-2xl font-bold">
+                                1
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">Zgłoś online</h3>
+                            <p class="text-[var(--text-secondary)] text-base">Wypełnij <a href="https://naprawa.kapitan-leszek.5m.pl/" target="_blank" rel="noopener noreferrer" class="font-bold text-[var(--secondary-color)] hover:underline">formularz</a> w minutę</p>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="bg-[var(--secondary-color)] text-white rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center text-2xl font-bold">
+                                2
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">Szybka diagnoza</h3>
+                            <p class="text-[var(--text-secondary)] text-base">Podajemy cenę jeszcze tego samego dnia</p>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="bg-[var(--secondary-color)] text-white rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center text-2xl font-bold">
+                                3
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">Naprawa</h3>
+                            <p class="text-[var(--text-secondary)] text-base">Jeśli mamy część na miejscu, dostajesz telefon w 2–3 godziny</p>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="bg-[var(--secondary-color)] text-white rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center text-2xl font-bold">
+                                4
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">Gotowe!</h3>
+                            <p class="text-[var(--text-secondary)] text-base">Odbierasz sprawny smartfon z gwarancją</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Co nas wyróżnia? -->
+            <section class="py-16 px-4 bg-white">
+                <div class="container mx-auto">
+                    <div class="text-center mb-12">
+                        <blockquote class="text-2xl md:text-3xl font-light italic text-[var(--text-secondary)] mb-8 max-w-4xl mx-auto">
+                            "Twój telefon to coś więcej niż sprzęt – to Twoje zdjęcia, kontakty, codzienność."
+                        </blockquote>
+
+                    </div>
+                    
+
+                 </div>
+             </section>
+
+             <!-- 4. Najczęstsze Problemy Section -->
+             <section class="py-16 px-4">
+                 <div class="container mx-auto">
+                     <div class="text-center mb-12">
+                         <h2 class="text-3xl md:text-4xl font-bold mb-4">Najczęstsze Problemy</h2>
+                         <p class="text-[var(--text-secondary)] text-lg max-w-2xl mx-auto">
+                             Specjalizujemy się w naprawie najczęstszych usterek telefonów
+                         </p>
+                     </div>
+                     
+                     <div class="relative w-full overflow-hidden rounded-2xl shadow-xl max-w-4xl mx-auto">
+                         <div class="slider-container">
+                             <div class="slide flex flex-col justify-end p-6" style="
+                                 height: 60vh;
+                                 background-image: linear-gradient(
+                                     rgba(0, 0, 0, 0.3),
+                                     rgba(0, 0, 0, 0.8)
+                                 ),
+                                 url('img/pekniety-ekran.jpg');
+                                 background-size: cover;
+                                 background-position: center;
+                             ">
+                                 <h3 class="text-3xl font-bold mb-2 text-white">Pęknięty Ekran?</h3>
+                                 <p class="text-lg text-white/90">
+                                     Nie martw się, przywrócimy mu nowy wygląd.
+                                 </p>
+                             </div>
+                             <div class="slide flex flex-col justify-end p-6" style="
+                                 height: 60vh;
+                                 background-image: linear-gradient(
+                                     rgba(0, 0, 0, 0.3),
+                                     rgba(0, 0, 0, 0.8)
+                                 ),
+                                 url('img/problemy-z-batera.jpg');
+                                 background-size: cover;
+                                 background-position: center;
+                             ">
+                                 <h3 class="text-3xl font-bold mb-2 text-white">Problemy z Baterią?</h3>
+                                 <p class="text-lg text-white/90">
+                                     Przywróć pełną moc dzięki szybkiej wymianie baterii.
+                                 </p>
+                             </div>
+                             <div class="slide flex flex-col justify-end p-6" style="
+                                 height: 60vh;
+                                 background-image: linear-gradient(
+                                     rgba(0, 0, 0, 0.3),
+                                     rgba(0, 0, 0, 0.8)
+                                 ),
+                                 url('img/zalanie-woda.jpg');
+                                 background-size: cover;
+                                 background-position: center;
+                             ">
+                                 <h3 class="text-3xl font-bold mb-2 text-white">Zalanie Wodą?</h3>
+                                 <p class="text-lg text-white/90">
+                                     Nasi eksperci przywrócą życie Twojemu urządzeniu.
+                                 </p>
+                             </div>
+                         </div>
+                         <div class="slider-dots"></div>
+                     </div>
+                     
+                     <div class="text-center mt-8">
+                         <a href="https://naprawa.kapitan-leszek.5m.pl/" target="_blank" class="inline-block rounded-full bg-[var(--yellow-accent)] px-8 py-4 text-lg font-bold text-[var(--primary-color)] shadow-lg transition-all hover:scale-105 hover:shadow-xl text-center">
+                             Umów Naprawę
+                         </a>
+                     </div>
+                 </div>
+             </section>
+
+             <!-- 5. Cennik i Wycena Section -->
+             <section class="py-16 px-4 bg-gray-50">
+                 <div class="container mx-auto">
+                     <div class="text-center mb-12">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4">Cennik i Wycena</h2>
+                        <p class="text-[var(--text-secondary)] text-lg max-w-2xl mx-auto">
+                            Przejrzyste ceny bez ukrytych kosztów
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                            <div class="text-4xl mb-4">📱</div>
+                            <h3 class="text-xl font-semibold mb-3">Wymiana Ekranu</h3>
+                            <p class="text-[var(--text-secondary)] text-base mb-4">iPhone, Samsung, Huawei</p>
+                            <div class="text-2xl font-bold text-[var(--secondary-color)] mb-4">od 150 zł</div>
+                            <a href="https://naprawa.kapitan-leszek.5m.pl/" target="_blank" class="inline-block bg-[var(--secondary-color)] text-white px-6 py-2 rounded-full hover:bg-opacity-90 transition-all">
+                                Sprawdź cenę
+                            </a>
+                        </div>
+
+                        <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                            <div class="text-4xl mb-4">🔋</div>
+                            <h3 class="text-xl font-semibold mb-3">Wymiana Baterii</h3>
+                            <p class="text-[var(--text-secondary)] text-base mb-4">Wszystkie modele</p>
+                            <div class="text-2xl font-bold text-[var(--secondary-color)] mb-4">od 80 zł</div>
+                            <a href="https://naprawa.kapitan-leszek.5m.pl/" target="_blank" class="inline-block bg-[var(--secondary-color)] text-white px-6 py-2 rounded-full hover:bg-opacity-90 transition-all">
+                                Sprawdź cenę
+                            </a>
+                        </div>
+
+                        <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                            <div class="text-4xl mb-4">💧</div>
+                            <h3 class="text-xl font-semibold mb-3">Naprawa po Zalaniu</h3>
+                            <p class="text-[var(--text-secondary)] text-base mb-4">Diagnoza + czyszczenie</p>
+                            <div class="text-2xl font-bold text-[var(--secondary-color)] mb-4">od 120 zł</div>
+                            <a href="https://naprawa.kapitan-leszek.5m.pl/" target="_blank" class="inline-block bg-[var(--secondary-color)] text-white px-6 py-2 rounded-full hover:bg-opacity-90 transition-all">
+                                Sprawdź cenę
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-12">
+                        <p class="text-[var(--text-secondary)] mb-4">Dokładną wycenę otrzymasz po diagnozie urządzenia</p>
+                        <a href="https://naprawa.kapitan-leszek.5m.pl/" target="_blank" class="inline-block rounded-full bg-[var(--yellow-accent)] px-8 py-4 text-lg font-bold text-[var(--primary-color)] shadow-lg transition-all hover:scale-105 hover:shadow-xl">
+                            Bezpłatna Wycena
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Why Us Section -->
+            <section id="uslugi" class="py-16 px-4 bg-white">
+                <div class="container mx-auto">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4">Dlaczego my?</h2>
+                        <p class="text-[var(--text-secondary)] text-lg max-w-2xl mx-auto">
+                            Bo liczy się czas, jakość i uczciwość
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 pt-8">
+                        <div class="service-card">
+                            <div class="p-6 text-center">
+                                <div class="bg-[var(--secondary-color)]/10 p-8 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+                                    <span class="text-5xl">⏱</span>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-4">Ekspresowy serwis</h3>
+                                <p class="text-[var(--text-secondary)] text-base leading-relaxed">Naprawy nawet w kilka godzin</p>
+                            </div>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="p-6 text-center">
+                                <div class="bg-[var(--secondary-color)]/10 p-8 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+                                    <span class="text-5xl">🔧</span>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-4">15 lat doświadczenia</h3>
+                                <p class="text-[var(--text-secondary)] text-base leading-relaxed">Setki udanych realizacji</p>
+                            </div>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="p-6 text-center">
+                                <div class="bg-[var(--secondary-color)]/10 p-8 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+                                    <span class="text-5xl">🛠</span>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-4">Oryginalne części</h3>
+                                <p class="text-[var(--text-secondary)] text-base leading-relaxed">Sprawdzone zamienniki premium</p>
+                            </div>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="p-6 text-center">
+                                <div class="bg-[var(--secondary-color)]/10 p-8 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+                                    <span class="text-5xl">💬</span>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-4">Uczciwa wycena</h3>
+                                <p class="text-[var(--text-secondary)] text-base leading-relaxed">Gwarancja satysfakcji</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- What Distinguishes Us Section -->
+            <section class="py-16 px-4 bg-white">
+                <div class="container mx-auto">
+                    <div class="text-center mb-12">
+                        <blockquote class="text-2xl md:text-3xl font-light italic text-[var(--text-secondary)] mb-8 max-w-4xl mx-auto">
+                            "Twój telefon to coś więcej niż sprzęt – to Twoje zdjęcia, kontakty, codzienność."
+                        </blockquote>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-8">Co nas wyróżnia?</h2>
+                    </div>
+                    
+
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-[var(--secondary-color)] text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1">
+                                <span class="text-sm font-bold">✓</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold mb-2">Indywidualne podejście do każdej naprawy</h3>
+                                <p class="text-[var(--text-secondary)]">Każdy telefon jest dla nas wyjątkowy</p>
+                            </div>
+                        </div>
+
+
+
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-[var(--secondary-color)] text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1">
+                                <span class="text-sm font-bold">✓</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold mb-2">Serwis „od ręki"</h3>
+                                <p class="text-[var(--text-secondary)]">Szybka naprawa bez długiego oczekiwania - większość napraw wykonujemy tego samego dnia.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-[var(--secondary-color)] text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1">
+                                <span class="text-sm font-bold">✓</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold mb-2">Gwarancja na naprawy</h3>
+                                <p class="text-[var(--text-secondary)]">Wszystkie nasze naprawy objęte są gwarancją jakości</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-[var(--secondary-color)] text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1">
+                                <span class="text-sm font-bold">✓</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold mb-2">Wysyłka i odbiór w paczkomacie</h3>
+                                <p class="text-[var(--text-secondary)]">Nadaj swój telefon wygodnie z dowolnego paczkomatu i odbierz go po naprawie – szybko, bez kolejek i bez wychodzenia z domu.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. Dlaczego my? Section -->
+            <section id="uslugi" class="py-16 px-4 bg-white">
+                <div class="container mx-auto">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4">Dlaczego my?</h2>
+                        <p class="text-[var(--text-secondary)] text-lg max-w-2xl mx-auto">
+                            Bo liczy się czas, jakość i uczciwość
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 pt-8">
+                        <div class="service-card">
+                            <div class="p-6 text-center">
+                                <div class="bg-[var(--secondary-color)]/10 p-8 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+                                    <span class="text-5xl">⏱</span>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-4">Ekspresowy serwis</h3>
+                                <p class="text-[var(--text-secondary)] text-base leading-relaxed">Naprawy nawet w kilka godzin</p>
+                            </div>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="p-6 text-center">
+                                <div class="bg-[var(--secondary-color)]/10 p-8 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+                                    <span class="text-5xl">🔧</span>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-4">15 lat doświadczenia</h3>
+                                <p class="text-[var(--text-secondary)] text-base leading-relaxed">Setki udanych realizacji</p>
+                            </div>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="p-6 text-center">
+                                <div class="bg-[var(--secondary-color)]/10 p-8 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+                                    <span class="text-5xl">🛠</span>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-4">Oryginalne części</h3>
+                                <p class="text-[var(--text-secondary)] text-base leading-relaxed">Sprawdzone zamienniki premium</p>
+                            </div>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="p-6 text-center">
+                                <div class="bg-[var(--secondary-color)]/10 p-8 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+                                    <span class="text-5xl">💬</span>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-4">Uczciwa wycena</h3>
+                                <p class="text-[var(--text-secondary)] text-base leading-relaxed">Gwarancja satysfakcji</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Trusted By Us Section -->
+            <section class="py-16 px-4 bg-[var(--primary-color)] text-white">
+                <div class="container mx-auto">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4">Zaufali Nam</h2>
+                        <p class="text-blue-100 text-lg max-w-2xl mx-auto">
+                            Liczby, które mówią same za siebie
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                        <div class="text-center">
+                            <div class="text-4xl md:text-5xl font-bold mb-2 text-[var(--secondary-color)]" data-counter="8">8+</div>
+                            <p class="text-blue-100 font-medium">Lat Doświadczenia</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl md:text-5xl font-bold mb-2 text-[var(--secondary-color)]" data-counter="5000">5000+</div>
+                            <p class="text-blue-100 font-medium">Napraw Rocznie</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl md:text-5xl font-bold mb-2 text-[var(--secondary-color)]" data-counter="85">85%</div>
+                            <p class="text-blue-100 font-medium">Napraw Tego Samego Dnia</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl md:text-5xl font-bold mb-2 text-[var(--secondary-color)]" data-counter="98">98%</div>
+                            <p class="text-blue-100 font-medium">Zadowolonych Klientów</p>
+                        </div>
+                    </div>
+
+                    <!-- Google Reviews Widget -->
+                    <div class="mt-16 max-w-4xl mx-auto">
+                        <div class="bg-white rounded-2xl p-8 shadow-lg">
+                            <div class="text-center mb-6">
+                                <h3 class="text-2xl font-bold mb-4">Opinie naszych klientów w Google</h3>
+                                <p class="text-gray-600">Zobacz co mówią o nas zadowoleni klienci</p>
+                            </div>
+                            <div class="w-full">
+                                <iframe 
+                                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dOWTgaQzuU17R8&q=Świat+Smartfonów+Krosno&zoom=15&maptype=roadmap"
+                                    class="w-full h-96 border-0 rounded-lg"
+                                    allowfullscreen=""
+                                    loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                    title="Opinie Google - Świat Smartfonów Krosno"
+                                ></iframe>
+                            </div>
+                            <div class="text-center mt-4">
+                                <p class="text-sm text-gray-500">Sprawdź wszystkie nasze opinie w Google</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gallery/3D Section -->
+            <section class="py-20 px-4 bg-gray-50" style="padding-top: 5rem;">
+                <div class="container mx-auto px-4" style="margin-top: 3rem;">
+                    <div class="text-center mb-12 animate-on-scroll animated">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4" data-testid="video-title">Wirtualny Spacer po Naszym Serwisie</h2>
+                        <p class="text-text-secondary text-lg">Zobacz jak wygląda nasze miejsce pracy i poznaj nasz profesjonalny warsztat</p>
+                    </div>
+                    <div class="max-w-4xl mx-auto">
+                        <div class="relative bg-gray-100 rounded-2xl overflow-hidden shadow-lg" style="padding-bottom: 56.25%; height: 0px;">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!4v1635784657155!6m8!1m7!1sCAoSFkNJSE0wb2dLRUlDQWdJRDZrNXUwSHc!2m2!1d52.229676!2d21.012229!3f261.049!4f0!5f0.7820865974627469" 
+                                class="absolute top-0 left-0 w-full h-full border-0" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade" 
+                                title="Wirtualny spacer po serwisie Świat Smartfonów" 
+                                data-testid="google-street-view"
+                            ></iframe>
+                        </div>
+                        <div class="text-center mt-6">
+                            <p class="text-text-secondary">💡 Użyj myszy lub dotyku, aby rozejrzeć się po naszym warsztatcie w 360°</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ Section -->
+            <section id="faq" class="py-16 px-4 bg-white">
+                <div class="container mx-auto">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4">❓ Najczęściej zadawane pytania</h2>
+                        <p class="text-[var(--text-secondary)] text-lg max-w-2xl mx-auto">
+                            Znajdź odpowiedzi na najczęściej zadawane pytania dotyczące naszych usług
+                        </p>
+                    </div>
+                    
+                    <div class="max-w-4xl mx-auto">
+                        <div class="faq-container">
+                            <details class="accordion-item group" open>
+                                <summary class="accordion-summary list-none">
+                                    <span class="accordion-question">Ile trwa naprawa telefonu?</span>
+                                    <div class="accordion-icon">
+                                        <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+                                        </svg>
+                                    </div>
+                                </summary>
+                                <p class="accordion-answer">Większość usterek usuwamy tego samego dnia – często w ciągu 2–3 godzin.</p>
+                            </details>
+                            
+                            <details class="accordion-item group">
+                                <summary class="accordion-summary list-none">
+                                    <span class="accordion-question">Czy dajecie gwarancję na naprawę?</span>
+                                    <div class="accordion-icon">
+                                        <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+                                        </svg>
+                                    </div>
+                                </summary>
+                                <p class="accordion-answer">Tak, każda usługa objęta jest gwarancją – długość zależy od rodzaju naprawy.</p>
+                            </details>
+                            
+                            <details class="accordion-item group">
+                                <summary class="accordion-summary list-none">
+                                    <span class="accordion-question">Czy muszę umawiać się wcześniej?</span>
+                                    <div class="accordion-icon">
+                                        <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+                                        </svg>
+                                    </div>
+                                </summary>
+                                <p class="accordion-answer">Nie – możesz przyjść od razu lub zgłosić naprawę online, żeby było szybciej.</p>
+                            </details>
+                            
+                            <details class="accordion-item group">
+                                <summary class="accordion-summary list-none">
+                                    <span class="accordion-question">Czy używacie oryginalnych części?</span>
+                                    <div class="accordion-icon">
+                                        <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+                                        </svg>
+                                    </div>
+                                </summary>
+                                <p class="accordion-answer">Tak, montujemy oryginalne podzespoły albo sprawdzone zamienniki premium – zawsze informujemy o wyborze.</p>
+                            </details>
+                            
+                            <details class="accordion-item group">
+                                <summary class="accordion-summary list-none">
+                                    <span class="accordion-question">Ile kosztuje naprawa?</span>
+                                    <div class="accordion-icon">
+                                        <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+                                        </svg>
+                                    </div>
+                                </summary>
+                                <p class="accordion-answer">Cena zależy od modelu i rodzaju usterki – <a href="https://naprawa.kapitan-leszek.5m.pl/" target="_blank" rel="noopener noreferrer" class="font-bold text-[var(--secondary-color)] hover:underline">darmową wycenę poznasz online</a> lub na miejscu.</p>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="kontakt" class="py-16 px-4 bg-gray-50">
+                <div class="container mx-auto">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4">Skontaktuj się z nami</h2>
+                        <p class="text-[var(--text-secondary)] text-lg">Jesteśmy tutaj, aby pomóc</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                        <!-- Contact Info -->
+                        <div class="space-y-6">
+                            <h3 class="text-2xl font-bold mb-6">Dane kontaktowe</h3>
+                            
+                            <div class="flex items-center gap-4 bg-white p-4 rounded-xl shadow-sm">
+                                <div class="text-[var(--primary-color)] flex items-center justify-center rounded-full bg-gray-100 shrink-0 size-12">
+                                    <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px">
+                                        <path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L134.87,160c-15.42-7.49-31.34-23.29-38.83-38.51l20.78-24.71c.2-.25.39-.5.57-.77a16,16,0,0,0,1.32-15.06l0-.12L97.54,33.64a16,16,0,0,0-16.62-9.52A56.26,56.26,0,0,0,32,80c0,79.4,64.6,144,144,144a56.26,56.26,0,0,0,55.88-48.92A16,16,0,0,0,222.37,158.46ZM176,208A128.14,128.14,0,0,1,48,80,40.2,40.2,0,0,1,82.87,40a.61.61,0,0,0,0,.12l21,47L83.2,111.86a6.13,6.13,0,0,0-.57.77,16,16,0,0,0-1,15.7c9.06,18.53,27.73,37.06,46.46,46.11a16,16,0,0,0,15.75-1.14,8.44,8.44,0,0,0,.74-.56L168.89,152l47,21.05h0s.08,0,.11,0A40.21,40.21,0,0,1,176,208Z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-[var(--primary-color)] text-base font-semibold">Telefon</p>
+                                    <p class="text-gray-500 text-sm font-normal">+48 516 619 822</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-4 bg-white p-4 rounded-xl shadow-sm">
+                                <div class="text-[var(--primary-color)] flex items-center justify-center rounded-full bg-gray-100 shrink-0 size-12">
+                                    <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px">
+                                        <path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48Zm-96,85.15L52.57,64H203.43ZM98.71,128,40,181.81V74.19Zm11.84,10.85,12,11.05a8,8,0,0,0,10.82,0l12-11.05,58,53.15H52.57ZM157.29,128,216,74.18V181.82Z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-[var(--primary-color)] text-base font-semibold">Email</p>
+                                    <p class="text-gray-500 text-sm font-normal">tele-tech@o2.pl</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-4 bg-white p-4 rounded-xl shadow-sm">
+                                <div class="text-[var(--primary-color)] flex items-center justify-center rounded-full bg-gray-100 shrink-0 size-12">
+                                    <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px">
+                                        <path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-[var(--primary-color)] text-base font-semibold">Adres</p>
+                                    <p class="text-gray-500 text-sm font-normal">ul. Mielczarskiego 4a, Krosno</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-4 bg-white p-4 rounded-xl shadow-sm">
+                                <div class="text-[var(--primary-color)] flex items-center justify-center rounded-full bg-gray-100 shrink-0 size-12">
+                                    <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px">
+                                        <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm64-88a8,8,0,0,1-8,8H128a8,8,0,0,1-8-8V72a8,8,0,0,1,16,0v48h48A8,8,0,0,1,192,128Z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-[var(--primary-color)] text-base font-semibold">Godziny otwarcia</p>
+                                    <p class="text-gray-500 text-sm font-normal">Pon-Pt: 9:00 - 18:00</p>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4 mt-6">
+                                <button class="flex w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl h-12 px-4 bg-[var(--yellow-accent)] text-[var(--primary-color)] text-sm font-bold shadow-sm transition-all hover:bg-yellow-400">
+                                    <svg fill="currentColor" height="20" viewBox="0 0 256 256" width="20">
+                                        <path d="M200,32H56A24,24,0,0,0,32,56V152a24,24,0,0,0,24,24h8v21.33a8,8,0,0,0,13.25,6.14L114.75,176H200a24,24,0,0,0,24-24V56A24,24,0,0,0,200,32Zm8,120a8,8,0,0,1-8,8H112a8,8,0,0,0-5.25,1.86l-20.5,19.31V160a8,8,0,0,0-8-8H56a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8H200a8,8,0,0,1,8,8Z"></path>
+                                    </svg>
+                                    <span class="truncate">Czat online</span>
+                                </button>
+                                <button class="flex w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl h-12 px-4 bg-[var(--yellow-accent)] text-[var(--primary-color)] text-sm font-bold shadow-sm transition-all hover:bg-yellow-400">
+                                    <svg fill="currentColor" height="20" viewBox="0 0 256 256" width="20">
+                                        <path d="M128,24A104,104,0,0,0,36.18,176.88L24.83,210.94a16,16,0,0,0,20.23,20.23l34.06-11.35A104,104,0,1,0,128,24Zm-1.25,160.8a88.13,88.13,0,0,1-45.83-13.43L40,184.22l12.83-38.5a88,88,0,1,1,74.06,38.88ZM158.34,142a23,23,0,0,1-13.88,14.61c-3.52,1.38-11.59,2.1-34.8-6.19-27.8-9.94-47.45-31.68-49.83-34.55a4,4,0,0,1-.21-4.75l7-8.12a4,4,0,0,1,5.59-.44l11.13,9a4,4,0,0,1,1.15,5.24C84,121.28,83,124.62,82.2,126a10.23,10.23,0,0,0,1.37,8.27c2.61,4,7.49,9.45,14,14.59s10.3,10.6,14.18,13.12a8.55,8.55,0,0,0,8.21,1.34c1.33-.8,4.5-3,5.65-4.14a4,4,0,0,1,5.25,1.15l9,11.13A4,4,0,0,1,158.34,142Z"></path>
+                                    </svg>
+                                    <span class="truncate">WhatsApp</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Contact Form -->
+                        <div class="bg-white p-8 rounded-2xl shadow-lg">
+                            <h3 class="text-2xl font-bold mb-6">Wyślij wiadomość</h3>
+                            <form class="space-y-4">
+                                <input class="w-full rounded-lg border-gray-300 bg-gray-50 focus:border-[var(--secondary-color)] focus:ring-[var(--secondary-color)] p-4 text-base" placeholder="Twoje imię" type="text"/>
+                                <input class="w-full rounded-lg border-gray-300 bg-gray-50 focus:border-[var(--secondary-color)] focus:ring-[var(--secondary-color)] p-4 text-base" placeholder="Twój email" type="email"/>
+                                <input class="w-full rounded-lg border-gray-300 bg-gray-50 focus:border-[var(--secondary-color)] focus:ring-[var(--secondary-color)] p-4 text-base" placeholder="Twój telefon" type="tel"/>
+                                <textarea class="w-full rounded-lg border-gray-300 bg-gray-50 focus:border-[var(--secondary-color)] focus:ring-[var(--secondary-color)] min-h-36 p-4 text-base" placeholder="Twoja wiadomość"></textarea>
+                                <button class="w-full rounded-full bg-[var(--primary-color)] px-8 py-3 text-base font-bold text-white shadow-lg transition-transform hover:scale-105">
+                                    Wyślij wiadomość
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Map -->
+                    <div class="mt-12">
+                        <div class="w-full relative aspect-video bg-cover rounded-2xl shadow-sm overflow-hidden">
+                            <iframe allowfullscreen="" height="100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2570.5!2d21.77058!3d49.68866!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473cfb6e0c0e5a87%3A0x8f3c7e7b73c41b8!2sMielczarskiego%204a%2C%2038-400%20Krosno%2C%20Polska!5e0!3m2!1spl!2spl!4v1678886400000!5m2!1spl!2spl" style="border:0;" width="100%"></iframe>
+                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                                <div class="bg-[var(--yellow-accent)] rounded-full p-2 shadow-lg">
+                                    <svg class="text-red-600" fill="currentColor" height="32" viewBox="0 0 24 24" width="32">
+                                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-black text-white py-16">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                    <div>
+                        <div class="flex items-center gap-2 text-xl font-bold mb-4">
+                            <img src="img/logo-bw.svg" alt="Świat Smartfonów" width="200" height="70" class="object-contain">
+                        </div>
+                        <p class="text-white/80 text-sm mb-6">
+                            Profesjonalny serwis telefonów komórkowych z wieloletnim doświadczeniem. 
+                            Gwarantujemy najwyższą jakość usług.
+                        </p>
+                        <!-- Bezpłatna wycena button -->
+                        <a href="https://naprawa.kapitan-leszek.5m.pl/" target="_blank" class="inline-flex items-center justify-center gap-2 bg-[var(--yellow-accent)] text-[var(--primary-color)] px-6 py-3 rounded-full font-bold text-sm transition-all hover:bg-yellow-400 hover:scale-105 shadow-lg">
+                            <svg fill="currentColor" height="20" viewBox="0 0 256 256" width="20">
+                                <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm40-68H96a8,8,0,0,1,0-16h72a8,8,0,0,1,0,16Zm0-32H96a8,8,0,0,1,0-16h72a8,8,0,0,1,0,16Z"></path>
+                            </svg>
+                            Bezpłatna wycena on-line
+                        </a>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-4">Usługi</h4>
+                        <ul class="space-y-2 text-sm text-white/80">
+                            <li><a href="https://naprawa.kapitan-leszek.5m.pl/" target="_blank" class="hover:text-white transition-colors">Wymiana ekranu</a></li>
+                            <li><a href="https://naprawa.kapitan-leszek.5m.pl/" target="_blank" class="hover:text-white transition-colors">Wymiana baterii</a></li>
+                            <li><a href="https://naprawa.kapitan-leszek.5m.pl/" target="_blank" class="hover:text-white transition-colors">Naprawa aparatu</a></li>
+                            <li><a href="https://naprawa.kapitan-leszek.5m.pl/" target="_blank" class="hover:text-white transition-colors">Serwis ekspres</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-4">Kontakt</h4>
+                        <ul class="space-y-2 text-sm text-white/80">
+                            <li>+48 516 619 822</li>
+                            <li>tele-tech@o2.pl</li>
+                            <li>Pon-Pt: 9:00 - 18:00</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-4">Śledź nas</h4>
+                        <div class="flex gap-4">
+                            <a href="https://www.facebook.com/profile.php?id=100057753455655" target="_blank" rel="noopener noreferrer" class="text-white/80 hover:text-white transition-colors">
+                                <svg fill="currentColor" height="24" viewBox="0 0 24 24" width="24">
+                                    <path d="M22.675 0h-21.35C.589 0 0 .589 0 1.325v21.351C0 23.411.589 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.736 0 1.325-.589 1.325-1.325V1.325C24 .589 23.411 0 22.675 0z"></path>
+                                </svg>
+</a>
+                            <a href="#" class="text-white/80 hover:text-white transition-colors">
+                                <svg fill="currentColor" height="24" viewBox="0 0 24 24" width="24">
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.552 0-3.88.016-5.228.077-2.833.129-4.041 1.319-4.17 4.17-.06 1.348-.077 1.676-.077 5.228s.016 3.88.077 5.228c.129 2.851 1.337 4.041 4.17 4.17 1.348.06 1.676.077 5.228.077s3.88-.016 5.228-.077c2.833-.129 4.041-1.319 4.17-4.17.06-1.348.077-1.676-.077-5.228s-.016-3.88-.077-5.228c-.129-2.851-1.337-4.041-4.17-4.17-1.348-.06-1.676-.077-5.228-.077zm0 4.544c-2.485 0-4.492 2.007-4.492 4.492s2.007 4.492 4.492 4.492 4.492-2.007 4.492-4.492-2.007-4.492-4.492-4.492zm0 7.188c-1.49 0-2.696-1.206-2.696-2.696s1.206-2.696 2.696-2.696 2.696 1.206 2.696 2.696-1.206 2.696-2.696 2.696zm4.814-8.318c-.783 0-1.417.634-1.417 1.417s.634 1.417 1.417 1.417 1.417-.634 1.417-1.417-.634-1.417-1.417-1.417z"></path>
+                                </svg>
+                            </a>
+                            <a href="#" class="text-white/80 hover:text-white transition-colors">
+                                <svg fill="currentColor" height="24" viewBox="0 0 24 24" width="24">
+                                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616v.064c0 2.298 1.634 4.212 3.791 4.649-.69.188-1.42.235-2.16.084.609 1.953 2.378 3.374 4.464 3.417-1.73 1.354-3.92 2.162-6.28 2.162-.41 0-.814-.024-1.21-.07C3.966 19.42 6.71 20.5 9.75 20.5c9.257 0 14.321-7.669 14.321-14.321 0-.218-.005-.435-.014-.652.984-.712 1.832-1.6 2.525-2.612z"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Legal Links Section -->
+                <div class="border-t border-white/20 pt-8 pb-6">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                        <div class="flex flex-wrap gap-6 text-sm">
+                            <a href="#" class="text-white/80 hover:text-white transition-colors">Regulamin</a>
+                            <a href="#" class="text-white/80 hover:text-white transition-colors">Polityka prywatności</a>
+                            <a href="#" class="text-white/80 hover:text-white transition-colors">Polityka cookies</a>
+                            <a href="#" class="text-white/80 hover:text-white transition-colors">RODO</a>
+                        </div>
+                        <p class="text-white/80 text-sm">
+                            © Świat Smartfonów. Wszelkie prawa zastrzeżone.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Mobile Navigation -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 md:hidden z-40">
+            <div class="flex justify-around items-center h-16">
+                <a class="flex flex-col items-center justify-center gap-1 text-[var(--primary-color)]" href="#home">
+                    <svg fill="currentColor" height="24" viewBox="0 0 256 256" width="24">
+                        <path d="M224,115.55V208a16,16,0,0,1-16,16H168a16,16,0,0,1-16-16V168a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v40a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V115.55a16,16,0,0,1,5.17-11.78l80-75.48.11-.11a16,16,0,0,1,21.53,0,1.14,1.14,0,0,0,.11.11l80,75.48A16,16,0,0,1,224,115.55Z"></path>
+                    </svg>
+                    <span class="text-xs font-medium">Główna</span>
+                </a>
+                <a class="flex flex-col items-center justify-center gap-1 text-gray-500" href="#uslugi">
+                    <svg fill="currentColor" height="24" viewBox="0 0 256 256" width="24">
+                        <path d="M128,80a48,48,0,1,0,48,48A48.06,48.06,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Zm95.68-93.85L135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17h0a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,224,40,175.82V80.18L128,32l88,48.17v95.64Z"></path>
+                    </svg>
+                    <span class="text-xs font-medium">Usługi</span>
+                </a>
+                <a class="flex flex-col items-center justify-center gap-1 text-gray-500" href="#opinie">
+                    <svg fill="currentColor" height="24" viewBox="0 0 256 256" width="24">
+                        <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176ZM112,84a12,12,0,1,1,12,12A12,12,0,0,1,112,84Z"></path>
+                    </svg>
+                    <span class="text-xs font-medium">Opinie</span>
+                </a>
+                <a class="flex flex-col items-center justify-center gap-1 text-gray-500" href="#kontakt">
+                    <svg fill="currentColor" height="24" viewBox="0 0 256 256" width="24">
+                        <path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L134.87,160c-15.42-7.49-31.34-23.29-38.83-38.51l20.78-24.71c.2-.25.39-.5.57-.77a16,16,0,0,0,1.32-15.06l0-.12L97.54,33.64a16,16,0,0,0-16.62-9.52A56.26,56.26,0,0,0,32,80c0,79.4,64.6,144,144,144a56.26,56.26,0,0,0,55.88-48.92A16,16,0,0,0,222.37,158.46ZM176,208A128.14,128.14,0,0,1,48,80,40.2,40.2,0,0,1,82.87,40a.61.61,0,0,0,0,.12l21,47L83.2,111.86a6.13,6.13,0,0,0-.57.77,16,16,0,0,0-1,15.7c9.06,18.53,27.73,37.06,46.46,46.11a16,16,0,0,0,15.75-1.14,8.44,8.44,0,0,0,.74-.56L168.89,152l47,21.05h0s.08,0,.11,0A40.21,40.21,0,0,1,176,208Z"></path>
+                    </svg>
+                    <span class="text-xs font-medium">Kontakt</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mobile navigation active state
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('nav a[href^="#"]');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-[var(--primary-color)]');
+                link.classList.add('text-gray-500');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('text-[var(--primary-color)]');
+                    link.classList.remove('text-gray-500');
+                }
+            });
+        });
+
+        // Slider functionality
+        document.addEventListener("DOMContentLoaded", function () {
+            const sliderContainer = document.querySelector(".slider-container");
+            const slides = document.querySelectorAll(".slide");
+            const dotsContainer = document.querySelector(".slider-dots");
+            const totalSlides = slides.length;
+            let currentIndex = 0;
+            let intervalId;
+
+            function createDots() {
+                for (let i = 0; i < totalSlides; i++) {
+                    const dot = document.createElement("div");
+                    dot.classList.add("dot");
+                    if (i === 0) dot.classList.add("active");
+                    dot.addEventListener("click", () => {
+                        goToSlide(i);
+                        resetInterval();
+                    });
+                    dotsContainer.appendChild(dot);
+                }
+            }
+
+            function updateDots() {
+                const dots = document.querySelectorAll(".dot");
+                dots.forEach((dot, index) => {
+                    if (index === currentIndex) {
+                        dot.classList.add("active");
+                    } else {
+                        dot.classList.remove("active");
+                    }
+                });
+            }
+
+            function goToSlide(index) {
+                if (index < 0) {
+                    index = totalSlides - 1;
+                } else if (index >= totalSlides) {
+                    index = 0;
+                }
+                sliderContainer.style.transform = `translateX(-${index * 100}%)`;
+                currentIndex = index;
+                updateDots();
+            }
+
+            function nextSlide() {
+                goToSlide(currentIndex + 1);
+            }
+
+            function startSlider() {
+                intervalId = setInterval(nextSlide, 4000); // 4 seconds
+            }
+
+            function resetInterval() {
+                clearInterval(intervalId);
+                startSlider();
+            }
+
+            // Initialize slider only if elements exist
+            if (sliderContainer && slides.length > 0 && dotsContainer) {
+                createDots();
+                startSlider();
+            }
+        });
+    </script>
+    
+    <!-- Photo Gallery Scripts -->
+    <script src="./foto.js"></script>
+    <script>
+        // Globalna zmienna dla instancji PhotoSlider
+        let photoSlider = null;
+
+        // Inicjalizacja galerii zdjęć po załadowaniu DOM
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sprawdzenie czy kontener galerii istnieje
+            const photoContainer = document.querySelector('.photo-container');
+            if (photoContainer) {
+                // Inicjalizacja PhotoSlider z konfiguracją podobną do demo
+                photoSlider = new PhotoSlider({
+                    apiUrl: 'https://galeria.kapitan-leszek.5m.pl/api/images',
+                    imageSize: 'medium',
+                    defaultImage: 'https://static.vecteezy.com/system/resources/thumbnails/004/141/669/small_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg',
+                    container: photoContainer,
+                    transition: 'fade',
+                    loop: true,
+                    transitionDuration: 500,
+                    autoplaySpeed: 4000, // 4 sekundy
+                    backgroundColor: 'transparent',
+                    showNavigation: true,
+                    showDate: false,
+                    showAuthor: false,
+                    showGradient: true,
+                    autoplay: true // Automatyczne uruchomienie
+                });
+                
+                console.log('Galeria zdjęć została zainicjalizowana');
+            }
+
+            // Obsługa błędów JavaScript dla galerii
+            window.addEventListener('error', function(e) {
+                if (e.filename && e.filename.includes('foto.js')) {
+                    console.warn('Błąd w galerii zdjęć:', e.error);
+                }
+            });
+        });
+    </script>
+
+    <!-- Page Loader JavaScript -->
+    <script>
+        // Page Loader Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const loader = document.getElementById('page-loader');
+            const htmlElement = document.documentElement;
+            
+            // Minimum display time for loader (to avoid flickering)
+            const minDisplayTime = 500;
+            const startTime = Date.now();
+            
+            function hideLoader() {
+                const elapsedTime = Date.now() - startTime;
+                const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
+                
+                setTimeout(() => {
+                    loader.classList.add('hidden');
+                    htmlElement.classList.remove('loading');
+                    
+                    // Remove loader from DOM after transition
+                    setTimeout(() => {
+                        if (loader && loader.parentNode) {
+                            loader.parentNode.removeChild(loader);
+                        }
+                    }, 300);
+                }, remainingTime);
+            }
+            
+            // Hide loader when page is fully loaded
+            if (document.readyState === 'complete') {
+                hideLoader();
+            } else {
+                window.addEventListener('load', hideLoader);
+            }
+            
+            // Fallback timeout (max 5 seconds)
+            setTimeout(hideLoader, 5000);
+        });
+    </script>
+</body>
+</html>

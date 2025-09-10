@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+    <link as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@400;500;700;800" onload="this.rel='stylesheet'" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style type="text/tailwindcss">
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #64748b;
+            --accent-color: #f59e0b;
+            --background-color: #ffffff;
+            --text-color: #1f2937;
+        }
+    </style>
+    <title>Tech Solutions - Responsive Menu</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+        
+        /* Mobile menu animations */
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        /* Desktop dropdown animations */
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="relative flex size-full min-h-screen flex-col bg-[var(--background-color)] justify-between group/design-root overflow-x-hidden" style='font-family: "Plus Jakarta Sans", "Noto Sans", sans-serif;'>
+        
+        <!-- Desktop Header -->
+        <header class="hidden lg:block sticky top-0 z-40 w-full bg-[var(--background-color)] shadow-sm border-b border-gray-200">
+            <div class="flex items-center justify-between px-6 py-4">
+                <!-- Logo -->
+                <div class="flex items-center gap-4">
+                    <div class="size-8 bg-[var(--primary-color)] rounded-lg flex items-center justify-center">
+                        <svg fill="white" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15Z"></path>
+                        </svg>
+                    </div>
+                    <h1 class="text-[var(--text-color)] text-xl font-bold leading-tight tracking-[-0.015em]">Tech Solutions</h1>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="flex items-center gap-8">
+                    <a class="text-[var(--text-color)] text-sm font-medium leading-normal hover:text-[var(--primary-color)] transition-colors" href="#">Home</a>
+                    
+                    <!-- Products Dropdown -->
+                    <div class="relative dropdown">
+                        <button class="flex items-center gap-1 text-[var(--text-color)] text-sm font-medium leading-normal hover:text-[var(--primary-color)] transition-colors">
+                            Products
+                            <svg fill="currentColor" height="16px" viewBox="0 0 256 256" width="16px" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+                            </svg>
+                        </button>
+                        <div class="dropdown-menu absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2">
+                            <a class="block px-4 py-2 text-sm text-[var(--text-color)] hover:bg-gray-50 hover:text-[var(--primary-color)]" href="#">Laptops</a>
+                            <a class="block px-4 py-2 text-sm text-[var(--text-color)] hover:bg-gray-50 hover:text-[var(--primary-color)]" href="#">SmartWatches</a>
+                            <a class="block px-4 py-2 text-sm text-[var(--text-color)] hover:bg-gray-50 hover:text-[var(--primary-color)]" href="#">Headphones</a>
+                            <a class="block px-4 py-2 text-sm text-[var(--text-color)] hover:bg-gray-50 hover:text-[var(--primary-color)]" href="#">Accessories</a>
+                        </div>
+                    </div>
+                    
+                    <a class="text-[var(--text-color)] text-sm font-medium leading-normal hover:text-[var(--primary-color)] transition-colors" href="#">About</a>
+                    <a class="text-[var(--text-color)] text-sm font-medium leading-normal hover:text-[var(--primary-color)] transition-colors" href="#">Blog</a>
+                    <a class="text-[var(--text-color)] text-sm font-medium leading-normal hover:text-[var(--primary-color)] transition-colors" href="#">Contact</a>
+                </nav>
+                
+                <!-- Desktop Actions -->
+                <div class="flex items-center gap-4">
+                    <button class="flex items-center justify-center size-10 rounded-full hover:bg-gray-100 transition-colors">
+                        <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+                        </svg>
+                    </button>
+                    <button class="relative flex items-center justify-center size-10 rounded-full hover:bg-gray-100 transition-colors">
+                        <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M228.42,88.62,204,188.2a24,24,0,0,1-23,19.8H75a24,24,0,0,1-23-19.8L27.58,88.62A8,8,0,0,1,36,80H72V64A56,56,0,0,1,184,64V80h36a8,8,0,0,1,8.42,8.62Z"></path>
+                        </svg>
+                        <div class="absolute -top-1 -right-1 flex items-center justify-center size-5 rounded-full bg-[var(--accent-color)] text-white text-xs font-bold">3</div>
+                    </button>
+                    <div class="size-8 bg-center bg-no-repeat aspect-square bg-cover rounded-full" style='background-image: url("https://cdn.usegalileo.ai/stability/b3b8b4e8-7c8e-4b8f-9c4a-2d5a8f6e3c1d.png");'></div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Mobile Header -->
+        <header class="lg:hidden sticky top-0 z-40 w-full bg-[var(--background-color)] shadow-sm">
+            <div class="flex items-center p-4 justify-between">
+                <button id="mobile-menu-toggle" class="text-[var(--text-color)] flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-gray-100 transition-colors">
+                    <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"></path>
+                    </svg>
+                </button>
+                <h1 class="text-[var(--text-color)] text-xl font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Tech Solutions</h1>
+                <div class="size-10"></div>
+            </div>
+        </header>
+        
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu-overlay" class="lg:hidden fixed inset-0 z-50 hidden">
+            <div class="fixed inset-0 bg-black/50" id="mobile-menu-backdrop"></div>
+            <div class="mobile-menu relative flex w-10/12 max-w-xs flex-col bg-white p-6 shadow-xl h-full">
+                <div class="absolute top-4 right-4">
+                    <button id="mobile-menu-close" class="flex h-10 w-10 items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-colors">
+                        <svg fill="currentColor" height="24" viewBox="0 0 256 256" width="24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <nav class="mt-12 flex-1">
+                    <ul class="flex flex-col space-y-2">
+                        <li>
+                            <a class="flex items-center gap-4 rounded-md bg-[var(--primary-color)]/10 px-4 py-3 text-[var(--primary-color)]" href="#">
+                                <div class="flex h-6 w-6 items-center justify-center">
+                                    <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M224,115.55V208a16,16,0,0,1-16,16H168a16,16,0,0,1-16-16V168a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v40a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V115.55a16,16,0,0,1,5.17-11.78l80-75.48.11-.11a16,16,0,0,1,21.53,0,1.14,1.14,0,0,0,.11.11l80,75.48A16,16,0,0,1,224,115.55Z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-base font-semibold">Home</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center gap-4 rounded-md px-4 py-3 text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors" href="#">
+                                <div class="flex h-6 w-6 items-center justify-center">
+                                    <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15Z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-base font-semibold">Products</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center gap-4 rounded-md px-4 py-3 text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors" href="#">
+                                <div class="flex h-6 w-6 items-center justify-center">
+                                    <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176ZM112,84a12,12,0,1,1,12,12A12,12,0,0,1,112,84Z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-base font-semibold">About</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center gap-4 rounded-md px-4 py-3 text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors" href="#">
+                                <div class="flex h-6 w-6 items-center justify-center">
+                                    <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M88,112a8,8,0,0,1,8-8h80a8,8,0,0,1,0,16H96A8,8,0,0,1,88,112Zm8,40h80a8,8,0,0,0,0-16H96a8,8,0,0,0,0,16ZM232,64V184a24,24,0,0,1-24,24H32A24,24,0,0,1,8,184.11V88a8,8,0,0,1,16,0v96a8,8,0,0,0,16,0V64A16,16,0,0,1,56,48H216A16,16,0,0,1,232,64Z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-base font-semibold">Blog</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center gap-4 rounded-md px-4 py-3 text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors" href="#">
+                                <div class="flex h-6 w-6 items-center justify-center">
+                                    <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48Z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-base font-semibold">Contact</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center gap-4 rounded-md px-4 py-3 text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors" href="#">
+                                <div class="flex h-6 w-6 items-center justify-center">
+                                    <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-base font-semibold">Shop</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        
+    <script>
+        // Mobile menu functionality
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
+        const mobileMenuBackdrop = document.getElementById('mobile-menu-backdrop');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        function openMobileMenu() {
+            mobileMenuOverlay.classList.remove('hidden');
+            setTimeout(() => {
+                mobileMenu.classList.add('open');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('open');
+            setTimeout(() => {
+                mobileMenuOverlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+        
+        mobileMenuToggle.addEventListener('click', openMobileMenu);
+        mobileMenuClose.addEventListener('click', closeMobileMenu);
+        mobileMenuBackdrop.addEventListener('click', closeMobileMenu);
+        
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !mobileMenuOverlay.classList.contains('hidden')) {
+                closeMobileMenu();
+            }
+        });
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024 && !mobileMenuOverlay.classList.contains('hidden')) {
+                closeMobileMenu();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<title>Stitch Design - Dark Mode</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+    :root {
+      --primary-color: #0284c7;
+      --secondary-color: #facc15;
+      --background-dark: #0f172a;
+      --background-light: #1f2937;
+      --text-primary: #ffffff;
+      --text-secondary: #94a3b8;
+      --accent-hover: #0ea5e9;
+      --accent-yellow: #fde047;
+      --accent-orange: #f59e0b;
+    }
+    @keyframes subtle-grid {
+      0% {
+        background-position: 0% 50%;
+      }
+      100% {
+        background-position: 100% 50%;
+      }
+    }
+    .animate-subtle-grid {
+      animation: subtle-grid 15s linear infinite;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .scroll-animate {
+      animation: fadeIn 1s ease-out;
+      animation-fill-mode: both;
+    }
+  </style>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('scroll-animate');
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+      document.querySelectorAll('[data-scroll-animate]').forEach(el => {
+        observer.observe(el);
+      });
+    });
+  </script>
+</head>
+<body class="bg-gray-100">
+<div class="relative flex size-full min-h-screen flex-col group/design-root" style='font-family: Inter, "Noto Sans", sans-serif;'>
+<div class="layout-container flex h-full grow flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-gray-200 px-10 py-4 bg-white">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-black">
+<svg class="h-6 w-6 text-[var(--primary-color)]" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-5H9v-2h2V7h2v5h2v2h-2v5h-2z"></path>
+</svg>
+<h2 class="text-black text-xl font-bold leading-tight tracking-[-0.015em]">Stitch</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-gray-500 hover:text-black text-sm font-medium leading-normal transition-colors" href="#">Home</a>
+<a class="text-gray-500 hover:text-black text-sm font-medium leading-normal transition-colors" href="#">Writing</a>
+<a class="text-gray-500 hover:text-black text-sm font-medium leading-normal transition-colors" href="#">Library</a>
+<a class="text-black text-sm font-medium leading-normal" href="#">Settings</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end items-center gap-4">
+<div class="relative w-full max-w-xs">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+<svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<input class="form-input block w-full pl-10 pr-4 py-2 rounded-md bg-gray-100 text-black border border-transparent focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)] focus:outline-none transition-colors" placeholder="Search" type="search"/>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDVBQl12naPwY56d6tsAjD8BHkv37oADdEbzIciI7cY4vtpptBpSIG0TvvpfzKfr6s4ZDsPj4ezCKkRw63BT1sjbp0g_l2RS34fStd8dnpR6Cvh1XT16b09MjSt37IOL_9CJ_yB80gz2EOGWuhV5ZFv9d44pVkJqCj15GeQJMGfk_GO7vmY3LF1CMXHMpq3mP9l6OzwlDtfkM_Js4bXKOcOdu9R-xV6egJuyKMHHKB-wGPK-0lESupbacJdR0mA7NQKJmLUGEsHgjI");'></div>
+</div>
+</header>
+<main class="flex-1 bg-white">
+<div class="relative overflow-hidden bg-[#0f172a] py-20 sm:py-28">
+<div class="absolute inset-0 animate-subtle-grid" style="background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px); background-size: 40px 40px;"></div>
+<div class="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-[#111827]/50 to-transparent"></div>
+<div class="absolute -top-1/4 -right-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-bl from-[#fde047]/10 to-transparent blur-3xl"></div>
+<div class="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+<h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl" data-scroll-animate="">
+              Unleash Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#fde047] to-[#f59e0b]">Curiosity</span>
+</h1>
+<p class="mt-6 max-w-2xl mx-auto text-lg text-[#94a3b8]" data-scroll-animate="" style="animation-delay: 0.2s;">
+              Stitch is your AI-powered research assistant. Ask anything, and get clear, sourced answers in seconds.
+            </p>
+<div class="mt-10 flex items-center justify-center gap-4" data-scroll-animate="" style="animation-delay: 0.4s;">
+<button class="inline-flex items-center justify-center rounded-lg bg-[#fde047] px-6 py-3 text-base font-medium text-black shadow-sm transition-all hover:bg-[#f59e0b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f59e0b]">
+                Get Started
+              </button>
+<button class="inline-flex items-center justify-center rounded-lg bg-[#1f2937] px-6 py-3 text-base font-medium text-white shadow-sm ring-1 ring-inset ring-white/20 transition-all hover:bg-[#4b5563] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+                Learn More
+              </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+
+</body></html>

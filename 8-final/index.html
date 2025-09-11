@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="pl" class="loading">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Świat Smartfonów - Profesjonalny Serwis Telefonów</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+    
+    <!-- Critical CSS for Page Loader -->
+    <style>
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #141414 0%, #007AFF 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.3s ease-out;
+        }
+        
+        .page-loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loader-container {
+            text-align: center;
+            color: white;
+        }
+        
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #facc15;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        .loader-text {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin: 0;
+            opacity: 0.9;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* Hide main content while loading */
+        .loading main {
+            opacity: 0;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .loader-spinner {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .loader-text {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Respect reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            .loader-spinner {
+                animation: none;
+                border-top-color: #facc15;
+            }
+        }
+    </style>
+
+    <style type="text/css">
+        /* Tailwind CSS directives - disable CSS validation for @apply rules */
+        /* stylelint-disable */
+        :root {
+            --primary-color: #141414;
+            --secondary-color: #007AFF;
+            --accent-color: #4F46E5;
+            --background-color: #F9F9F9;
+            --text-primary: #1C1C1E;
+            --text-secondary: #636366;
+            --yellow-accent: #facc15;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .service-card {
+            @apply bg-white rounded-2xl shadow-md overflow-hidden transition-all duration-300 ease-in-out hover:transform hover:-translate-y-2 hover:shadow-xl;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+        .slider-container {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+        .slider-dots {
+            position: absolute;
+            bottom: 1.25rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+        }
+        .dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 9999px;
+            background-color: var(--text-secondary);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .dot.active {
+            background-color: var(--yellow-accent);
+            width: 1.5rem;
+        }
+        /* Enhanced FAQ Accordion Styles */
+        .accordion-item {
+            @apply border border-gray-200 rounded-xl mb-4 bg-white shadow-sm transition-all duration-300 hover:shadow-md;
+            border-color: #e5e7eb;
+        }
+        
+        .accordion-item:hover {
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        
+        .accordion-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .accordion-summary {
+            @apply flex cursor-pointer items-center justify-between gap-4 p-6 rounded-xl transition-all duration-300;
+        }
+        
+        .accordion-summary:hover {
+            background: linear-gradient(to right, rgba(59, 130, 246, 0.05), rgba(37, 99, 235, 0.05));
+        }
+        
+        .accordion-question {
+            @apply text-lg font-bold text-[var(--text-primary)] leading-relaxed;
+        }
+        
+        .accordion-icon {
+            @apply text-[var(--secondary-color)] transition-all duration-300 flex-shrink-0;
+            width: 28px;
+            height: 28px;
+        }
+        
+        .accordion-icon:hover {
+            @apply text-[var(--primary-color)] scale-110;
+        }
+        
+        .accordion-answer {
+            @apply text-base font-normal text-[var(--text-secondary)] px-8 py-8 leading-loose;
+            border-top: 1px solid #f3f4f6;
+            margin-top: -1px;
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            line-height: 1.8;
+            letter-spacing: 0.025em;
+        }
+        
+        details[open] .accordion-icon {
+            transform: rotate(180deg);
+            color: var(--primary-color);
+        }
+        
+        details[open] .accordion-item {
+            border-color: var(--secondary-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+        
+        details[open] .accordion-summary {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(37, 99, 235, 0.08) 100%);
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        /* Responsive FAQ Styles */
+        @media (max-width: 768px) {
+            .accordion-question {
+                @apply text-base font-semibold;
+            }
+            
+            .accordion-answer {
+                @apply text-sm px-4 pb-4;
+            }
+            
+            .accordion-summary {
+                @apply p-4;
+            }
+            
+            .accordion-icon {
+                width: 24px;
+                height: 24px;
+            }
+        }
+        
+        /* FAQ Section Container Enhancement */
+        .faq-container {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f1f5f9 100%);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        @media (max-width: 768px) {
+            .faq-container {
+                padding: 1rem;
+                border-radius: 16px;
+            }
+        }
+        
+        /* Premium Services Section Styles */
+        .premium-services-container {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+            border-radius: 2rem;
+            padding: 3rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .premium-services-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .premium-service-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .premium-service-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        
+        .premium-service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .premium-service-card:hover::before {
+            opacity: 1;
+        }
+        
+        .service-icon-container {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 1rem;
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .premium-service-card:hover .service-icon-container {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .service-icon {
+            width: 2rem;
+            height: 2rem;
+            color: #64748b;
+            transition: all 0.3s ease;
+        }
+        
+        .premium-service-card:hover .service-icon {
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .premium-cta-button {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.875rem 1.75rem;
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border: 2px solid #e2e8f0;
+            border-radius: 0.875rem;
+            font-weight: 600;
+            color: #475569;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            margin-top: auto;
+        }
+        
+        .premium-cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+        
+        .premium-cta-button:hover::before {
+            left: 0;
+        }
+        
+        .premium-cta-button:hover {
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+        
+        .premium-cta-button:focus {
+            outline: 2px solid #3b82f6;
+            outline-offset: 2px;
+        }
+        
+        @media (max-width: 768px) {
+            .premium-services-container {
+                padding: 2rem 1rem;
+                border-radius: 1.5rem;
+            }
+            
+            .service-icon-container {
+                width: 3rem;
+                height: 3rem;
+                margin-bottom: 1rem;
+            }
+            
+            .service-icon {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+            
+            .premium-cta-button {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.875rem;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .premium-service-card,
+            .premium-cta-button,
+            .service-icon-container,
+            .service-icon {
+                transition: none;
+            }
+            
+            .premium-service-card:hover {
+                transform: none;
+            }
+            
+            .premium-service-card:hover .service-icon-container {
+                transform: none;
+            }
+        }
+        
+        /* Photo Gallery Styles */
+        .controls {
+            opacity: 0;
+            transition: opacity 300ms ease-in-out;
+        }
+        .photo-container:hover .controls,
+        .photo-container:focus-within .controls {
+            opacity: 1;
+        }
+
+        
+        /* Ulepszone style dla płynnych przejść */
+        .photo-display {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .photo-display::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: inherit;
+            background-size: inherit;
+            background-position: inherit;
+            background-repeat: inherit;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 1;
+        }
+        
+        .photo-display.transitioning::before {
+            opacity: 1;
+        }
+        
+        /* Kontrola gradientu */
+        .controls.gradient-visible {
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+        }
+        
+        .controls.gradient-hidden {
+            background: transparent;
+        }
+        
+        /* Płynne przejścia dla slajdów */
+        .slide-transition-enter {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        
+        .slide-transition-enter-active {
+            transform: translateX(0);
+            opacity: 1;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s ease;
+        }
+        
+        .slide-transition-exit {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        .slide-transition-exit-active {
+            transform: translateX(-100%);
+            opacity: 0;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s ease;
+        }
+        /* stylelint-enable */
+    </style>
+    
+    <style>
+        body {
+            min-height: 100vh;
+        }
+        .group:hover .group-hover\:block {
+            display: block;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        .scroll-smooth {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="text-white">
+<div class="relative min-h-screen overflow-x-hidden">
+<div class="absolute top-0 left-0 w-full h-full z-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(255,255,255,0.05),rgba(255,255,255,0))]"></div>
+<main class="relative z-10">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="text-center lg:text-left">
+<h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-4" style="font-weight: 900;"> Świat Smartfonów </h1>
+<p class="text-2xl text-gray-300 mb-8 max-w-lg mx-auto lg:mx-0"> Professional services </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+<a class="group inline-flex items-center justify-center gap-3 bg-[var(--brand-yellow)] text-gray-900 font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:shadow-xl hover:shadow-[var(--brand-yellow)]/20 transform hover:-translate-y-1 transition-all duration-300 ease-in-out" href="#formularz">
+<span>Zgłoś naprawę online</span>
+<span class="material-symbols-outlined group-hover-effect transition-transform duration-300 ease-in-out">arrow_forward</span>
+</a>
+<a class="group inline-flex items-center justify-center gap-3 bg-white/10 border border-white/20 text-white font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:bg-white/20 transform hover:-translate-y-1 transition-all duration-300 ease-in-out" href="#">
+<span>Zadzoń teraz!</span>
+<span class="material-symbols-outlined transition-transform duration-300 ease-in-out">call</span>
+</a>
+</div>
+<div class="lg:hidden relative h-64 sm:h-72 mt-12 fade-gradient overflow-hidden -mx-4 sm:-mx-6">
+<div class="absolute top-1/2 -translate-y-1/2 flex photo-carousel">
+<a class="animated-photo w-56 h-56 p-2 bg-white rounded-2xl shadow-xl mx-2 shrink-0 relative overflow-hidden group" href="#" style="animation-delay: 0s;">
+<img alt="Sklep Świat Smartfonów" class="animated-img rounded-xl object-cover w-full h-full" src="img/sklep.JPG"/>
+<div class="absolute inset-0 rounded-xl bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="overlay-content absolute inset-0 flex flex-col justify-center items-center p-4 text-white">
+<h3 class="text-lg font-bold">Sklep</h3>
+<p class="text-xs flex items-center gap-1">Zobacz naszą ofertę <span class="material-symbols-outlined text-sm align-middle">touch_app</span></p>
+</div>
+</a>
+<a class="animated-photo w-56 h-56 p-2 bg-white rounded-2xl shadow-xl mx-2 shrink-0 relative overflow-hidden group" href="#" style="animation-delay: -2s;">
+<img alt="Serwis telefonów" class="animated-img rounded-xl object-cover w-full h-full" src="https://res.cloudinary.com/dik82aile/image/upload/v1757512348/serwis_et5xmz.jpg"/>
+<div class="absolute inset-0 rounded-xl bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="overlay-content absolute inset-0 flex flex-col justify-center items-center p-4 text-white">
+<h3 class="text-lg font-bold">Serwis</h3>
+<p class="text-xs flex items-center gap-1">Napraw swój telefon <span class="material-symbols-outlined text-sm align-middle">touch_app</span></p>
+</div>
+</a>
+<a class="animated-photo w-56 h-56 p-2 bg-white rounded-2xl shadow-xl mx-2 shrink-0 relative overflow-hidden group" href="#" style="animation-delay: -4s;">
+<img alt="New Mobile" class="animated-img rounded-xl object-cover w-full h-full" src="img/nju-logo.jpg"/>
+<div class="absolute inset-0 rounded-xl bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="overlay-content absolute inset-0 flex flex-col justify-center items-center p-4 text-white">
+<h3 class="text-lg font-bold">New Mobile</h3>
+<p class="text-xs flex items-center gap-1">Zobacz nowe modele <span class="material-symbols-outlined text-sm align-middle">touch_app</span></p>
+</div>
+</a>
+<a class="animated-photo w-56 h-56 p-2 bg-white rounded-2xl shadow-xl mx-2 shrink-0 relative overflow-hidden group" href="#" style="animation-delay: -6s;">
+<img alt="Premium Mobile" class="animated-img rounded-xl object-cover w-full h-full" src="img/premium-mobile-logo.jpg"/>
+<div class="absolute inset-0 rounded-xl bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="overlay-content absolute inset-0 flex flex-col justify-center items-center p-4 text-white">
+<h3 class="text-lg font-bold">Premium Mobile</h3>
+<p class="text-xs flex items-center gap-1">Usługi premium <span class="material-symbols-outlined text-sm align-middle">touch_app</span></p>
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="relative h-[500px] hidden lg:flex items-center justify-center">
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-4 pt-10">
+<a class="block animated-photo p-2 bg-white rounded-2xl shadow-2xl relative overflow-hidden group" href="#" style="animation-delay: 0s;">
+<img alt="Sklep Świat Smartfonów" class="animated-img rounded-xl object-cover h-56 w-56" src="img/sklep.JPG"/>
+<div class="absolute inset-0 rounded-xl bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="overlay-content absolute inset-0 flex flex-col justify-center items-center p-6 text-white text-center">
+<h3 class="text-2xl font-bold">Sklep</h3>
+<p class="text-sm flex items-center gap-1">Zobacz naszą ofertę <span class="material-symbols-outlined text-base align-middle">touch_app</span></p>
+</div>
+</a>
+<a class="block animated-photo p-2 bg-white rounded-2xl shadow-2xl relative overflow-hidden group" href="#" style="animation-delay: -4s;">
+<img alt="New Mobile" class="animated-img rounded-xl object-cover h-56 w-56" src="img/nju-logo.jpg"/>
+<div class="absolute inset-0 rounded-xl bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="overlay-content absolute inset-0 flex flex-col justify-center items-center p-6 text-white text-center">
+<h3 class="text-2xl font-bold">New Mobile</h3>
+<p class="text-sm flex items-center gap-1">Zobacz nowe modele <span class="material-symbols-outlined text-base align-middle">touch_app</span></p>
+</div>
+</a>
+</div>
+<div class="space-y-4">
+<a class="block animated-photo p-2 bg-white rounded-2xl shadow-2xl relative overflow-hidden group" href="#" style="animation-delay: -2s;">
+<img alt="Serwis telefonów" class="animated-img rounded-xl object-cover h-56 w-56" src="https://res.cloudinary.com/dik82aile/image/upload/v1757512348/serwis_et5xmz.jpg"/>
+<div class="absolute inset-0 rounded-xl bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="overlay-content absolute inset-0 flex flex-col justify-center items-center p-6 text-white text-center">
+<h3 class="text-2xl font-bold">Serwis</h3>
+<p class="text-sm flex items-center gap-1">Napraw swój telefon <span class="material-symbols-outlined text-base align-middle">touch_app</span></p>
+</div>
+</a>
+<a class="block animated-photo p-2 bg-white rounded-2xl shadow-2xl relative overflow-hidden group" href="#" style="animation-delay: -6s;">
+<img alt="Premium Mobile" class="animated-img rounded-xl object-cover h-56 w-56" src="img/premium-mobile-logo.jpg"/>
+<div class="absolute inset-0 rounded-xl bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="overlay-content absolute inset-0 flex flex-col justify-center items-center p-6 text-white text-center">
+<h3 class="text-2xl font-bold">Premium Mobile</h3>
+<p class="text-sm flex items-center gap-1">Usługi premium <span class="material-symbols-outlined text-base align-middle">touch_app</span></p>
+</div>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<div class="bg-white/5 p-8">
+<h2 class="text-3xl font-bold text-center text-white" id="formularz">Skontaktuj się z nami</h2>
+<p class="text-center mt-2 text-gray-300">Wypełnij formularz, a my skontaktujemy się z Tobą wkrótce.</p>
+</div>
+</body></html>
